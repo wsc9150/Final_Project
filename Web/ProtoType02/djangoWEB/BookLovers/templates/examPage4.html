@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            #header {
+                position: relative;
+                z-index: 10000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                height: 3em;
+                line-height: 3em;
+                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);
+                margin-top : 0px;
+                text-align : center;
+            }
+
+            .button{
+                display: flex;
+                justify-content: space-between;
+                margin-top : 20px;
+                padding-right: 20px;
+            }
+
+            p{
+                font-size   : 25px;
+                font-style  : italic;
+                font-weight : 900;
+                font-color  : black;
+            }
+
+            section{
+                background-image: url({% static 'images/book_img07.jpg' %});
+                background-size: 100% 100%, cover;
+                background-attachment: fixed, fixed;
+                background-position: top left, center center;
+                margin: auto;
+                opacity: 0.5;
+                position: absolute;
+                height : 100%;
+                width: 100%;
+            }
+            a:active{
+                background-color: aqua;
+            }
+            body{
+                overflow-x:hidden;
+                overflow-y:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <header id="header">
+            <h1>psychological test J vs P</h1>
+        </header>
+
+        <section>
+            <form action="{% url 'result' %}" method="post">
+                {% csrf_token %}
+                <div class="q_a">
+                    <p>Q1. 당신의 시험 준비 어떻게 하셨나요?</p>
+                    <input type="radio" name="exam4_Q1" value="J">
+                    <a>1달 정도의 여유 기간과 함께 계획을 세워 차근차근 준비하였사옵니다아~</a><br>
+                    <input type="radio" name="exam4_Q1" value="P">
+                    <a>아직 시간 많이 남았어~ 벼!락!치!기! 하면 되지~!</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q2. 독서왕 콘테스트에 나간 당신, 한 달에 책을 10권 읽어야 한다 . 이 때 나는</p>
+                    <input type="radio" name="exam4_Q2" value="J">
+                    <a>내가 읽고 싶은 한 책을 정주행하고 다음 책으로 넘어간다.</a><br>
+                    <input type="radio" name="exam4_Q2" value="P">
+                    <a>이 책 조금 읽고 저 책 조금읽고 왔다갔다 한 번에 여러 책을 읽는다.</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q3. 회사에서 당신에게 일에 대한 자유를 주었습니다. 어찌하시겠습니까?</p>
+                    <input type="radio" name="exam4_Q3" value="J">
+                    <a>일의 목록을 먼저 확인한 다음 일정표를 만들어 진행한다.</a><br>
+                    <input type="radio" name="exam4_Q3" value="P">
+                    <a>지금 눈에 보이는 일이나 먼저 하고 싶은 일을 한다.</a><br>
+                </div>
+                <button type="submit">go to result page</button>
+            </form>
+<!--            <div class="button">-->
+<!--                <button type="button" onClick="location.href='/finalProject/exam3'" >go to Previous page</button>-->
+<!--                <button type="button" onClick="location.href='/finalProject/result'" >go to next page</button>-->
+<!--            </div>-->
+        </section>
+    </body>
+    <script>
+
+    </script>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+{% load static %}
+
+<html>
+	<head>
+		<title>Healing Recommendation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
+		<style>
+			.first {
+				float: left;
+				width: 48%;
+				margin-left: 20px;
+			}
+
+			.second {
+				float: right;
+				width: 48%;
+				margin-right: 20px;
+			}
+
+			text:hover {
+				fill: red;
+			}
+		</style>
+
+
+		<script src="https://d3js.org/d3.v4.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+	</head>
+	<body>
+
+		<!-- Header -->
+		<header id="header">
+			<a href="../index" class="logo"><strong>Book Lovers</strong></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
+
+		<!-- Nav -->
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<section id="main">
+			<div class="inner">
+				<header>
+					<p class="info">Healing Recommendation</p>
+				</header>
+			</div>
+			<div class="first" id="first">
+
+			</div>
+
+			<div class="second">
+				<div id="bookInfo">
+				</div>
+			</div>
+		</section>
+
+
+
+		<!-- Scripts -->
+		<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script>
+			var temp = document.getElementById("first")
+			var w = Number(window.getComputedStyle(temp).width.split('p')[0])
+
+			// console.log(typeof window.getComputedStyle(temp).width);
+			// console.log(window.getComputedStyle(temp).width);
+			// console.log(Number(window.getComputedStyle(temp).width.split('p')[0]));
+
+			var width = w,
+				height = 650;
+
+			d3.csv("{% static 'BookLovers/wordcloud_keyword_cnt_over10.csv' %}", function (data) {
+				showCloud(data)
+			});
+
+			function showCloud(data) {
+				d3.layout.cloud().size([width, height])
+					//클라우드 레이아웃에 데이터 전달
+					.words(data)
+					.rotate(0)
+					//스케일로 각 단어의 크기를 설정
+					.fontSize(function (d) {
+						return d.cnt / 2.5;
+					})
+					//클라우드 레이아웃을 초기화 > end 이벤트 발생 > 연결된 함수 작동
+					.on("end", draw)
+					.start();
+
+				function draw(words) {
+					d3.select(".first").append("svg")
+						.attr("width", width)
+						.attr("height", height)
+            			.append("g")
+              			.attr("transform", "translate(" + width/2 + "," + height/2 + ")")
+            			.selectAll("text")
+              			.data(words)
+
+            			.enter()
+            			.append("a")
+						.attr("href", function(d) {
+							return "healing/keyword_info/" + d.keyword;
+						})
+            			.append("text")
+              			.style("font-size", function(d) { return d.size + "px"; })
+              			.attr("text-anchor", "middle")
+              			.attr("transform", function(d) {
+                			return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              			})
+            			.text(function(d) { return d.keyword; });
+				}
+			}
+
+			console.log(document.getElementsByTagName('text'));
+			console.log(document.getElementsByTagName('text')[0]);
+		</script>
+	</body>
+</html>

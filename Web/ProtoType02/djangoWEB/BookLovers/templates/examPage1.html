@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            #header {
+                position: relative;
+                z-index: 10000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                height: 3em;
+                line-height: 3em;
+                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);
+                margin-top : 0px;
+                text-align : center;
+            }
+
+            .button{
+                display: flex;
+                justify-content: space-between;
+                margin-top : 20px;
+                padding-right: 20px;
+            }
+
+            p{
+                font-size   : 25px;
+                font-style  : italic;
+                font-weight : 900;
+                font-color  : black;
+            }
+
+            section{
+                background-image: url({% static 'images/book_img07.jpg' %});
+                background-size: 100% 100%, cover;
+                background-attachment: fixed, fixed;
+                background-position: top left, center center;
+                margin: auto;
+                opacity: 0.5;
+                position: absolute;
+                height : 100%;
+                width: 100%;
+            }
+            a:active{
+                background-color: aqua;
+            }
+            body{
+                overflow-x:hidden;
+                overflow-y:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <header id="header">
+            <h1>psychological test E vs I</h1>
+        </header>
+
+        <section>
+            <form action="{% url 'exam2' %}" method="post">
+                {% csrf_token %}
+                <div class="q_a">
+                    <p>Q1. 당신에게 꿀같은 휴가가 생겼을 때</p>
+                    <input type="radio" name="exam1_Q1" value="E">
+                    <a>‘자동차 주말여행 코스북’을 들고 당장 밖으로 나간다</a><br>
+                    <input type="radio" name="exam1_Q1" value="I">
+                    <a>‘백종원이 추천하는 집밥 메뉴 책’을 보고 요리를 한다</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q2. 학창 시절 당신은 어떤 사람이었나요?</p>
+                    <input type="radio" name="exam1_Q2" value="E">
+                    <a>I’m top 인싸.</a><br>
+                    <input type="radio" name="exam1_Q2" value="I">
+                    <a>교내의 일은 나와 관련이 없소이다..</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q3. 오랜만에 정말 인생책을 찾았을 때 나는</p>
+                    <input type="radio" name="exam1_Q3" value="E">
+                    <a>야 이 책 꼭 봐야돼.. 진짜 대박이야.. 꼭 읽어야 돼 진짜… 주변사람들에게 인생책이라며 추천한다.</a><br>
+                    <input type="radio" name="exam1_Q3" value="I">
+                    <a>오… 나만 알고 싶은 책이다… 이건 찐이야…. 혼자 인생책을 찾은 기쁨을 만끽한다.</a><br>
+                </div>
+                <button type="submit">go to next page</button>
+            </form>
+        </section>
+    </body>
+</html>

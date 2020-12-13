@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            #header {
+                position: relative;
+                z-index: 10000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                height: 3em;
+                line-height: 3em;
+                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);
+                margin-top : 0px;
+                text-align : center;
+            }
+
+            .button{
+                display: flex;
+                justify-content: space-between;
+                margin-top : 20px;
+                padding-right: 20px;
+            }
+
+            p{
+                font-size   : 25px;
+                font-style  : italic;
+                font-weight : 900;
+                font-color  : black;
+            }
+
+            section{
+                background-image: url({% static 'images/book_img07.jpg' %});
+                background-size: 100% 100%, cover;
+                background-attachment: fixed, fixed;
+                background-position: top left, center center;
+                margin: auto;
+                opacity: 0.5;
+                position: absolute;
+                height : 100%;
+                width: 100%;
+            }
+            a:active{
+                background-color: aqua;
+            }
+            body{
+                overflow-x:hidden;
+                overflow-y:hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <header id="header">
+            <h1>psychological test T vs F</h1>
+        </header>
+
+        <section>
+            <form action="{% url 'exam4' %}" method="post">
+                {% csrf_token %}
+                <div class="q_a">
+                    <p>Q1. 저는 _____ 한 사람이라는 소리를 종종 듣습니다.</p>
+                    <input type="radio" name="exam3_Q1" value="T">
+                    <a>cold</a><br>
+                    <input type="radio" name="exam3_Q1" value="F">
+                    <a>warm</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q2. 당신에게 친구가  “나 오늘 우울해서 책 한 권 샀어” 라고 말할 때 나의 반응은</p>
+                    <input type="radio" name="exam3_Q2" value='T'>
+                    <a>“너는 우울할 때 책을 사면 기분이 나아지는구나~”</a><br>
+                    <input type="radio" name="exam3_Q2" value='F'>
+                    <a>“힝...ㅠ 너 무슨일이야.. 왜 우울해...ㅠㅠㅠ”</a><br>
+                </div>
+                <div class="q_a">
+                    <p>Q3. 내 최애 책에 대해 설명할 때 나는</p>
+                    <input type="radio" name="exam3_Q3" value='T'>
+                    <a>“그 책은 말이야.. ~~ 시대를 배경으로 쓰여졌는데, 주인공인 xx가 자기 꿈을 찾아가는  내용을 담은 책이야 “ 라고 설명한다.</a><br>
+                    <input type="radio" name="exam3_Q3" value='F'>
+                    <a>“책 내용이 정말 내 맘에 와닿았어..ㅠㅠㅠㅠ” 라고 설명한다.</a><br>
+                </div>
+                <button type="submit">go to next page</button>
+            </form>
+<!--            <div class="button">-->
+<!--                <button type="button" onClick="location.href='/finalProject/exam2'" >go to Previous page</button>-->
+<!--                <button type="button" onClick="location.href='/finalProject/exam4'" >go to next page</button>-->
+<!--            </div>-->
+        </section>
+    </body>
+</html>
