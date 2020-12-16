@@ -20,11 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="416b7432-42ff-46ae-9200-25ef736bd188" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ProtoType02.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ProtoType02.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/djangoWEB/djangoWEB/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/djangoWEB/djangoWEB/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/djangoWEB/BookLovers/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/djangoWEB/BookLovers/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
