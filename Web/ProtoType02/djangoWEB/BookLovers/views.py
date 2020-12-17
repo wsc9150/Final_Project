@@ -1,18 +1,34 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from .models import *
+
 import requests
 
+
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from sklearn import neighbors
+from sqlalchemy import create_engine
+
 # Create your views here.
+
+# 데이터 불러오는 작업
+engine = create_engine('mysql+pymysql://root:1234@localhost/testdb', convert_unicode=True)
+conn = engine.connect()
+library_book_df = pd.read_sql_table('booklovers_librarybook', conn)
 
 
 def index(request) :
     return render(request, 'index.html')
 
 
+# ---------- 카테고리 ----------
 def category(request) :
     return render(request, 'category.html')
 
 
+# 연령, 성별, 장르 별 조건을 이용한 데이터 불러오기
 def category_info(request) :
     age = request.POST['ageType']
     genre = request.POST['genreType']
@@ -52,6 +68,7 @@ def category_info(request) :
     return JsonResponse(data, safe = False)
 
 
+# 선택한 책에 대한 상세정보 데이터 불러오기
 def book_info(request) :
     isbn = request.POST['isbn']
 
@@ -75,12 +92,59 @@ def book_info(request) :
     return JsonResponse(data, safe = False)
 
 
+def content_info(request) :
+    book_name = request.POST['bookName']
+
+
+def popularity_info(request) :
+    book_name = request.POST['bookName']
+
+    distance, indices = make_bookfeatures(library_book_df)
+    data = print_similar_books(book_name, indices, library_book_df)
+
+    return JsonResponse(data, safe = False)
+
+
+# kNN을 사용한 군집분석
+def make_bookfeatures(df) :
+    books_features = pd.concat([df['Ratings_Dist'].str.get_dummies(sep = ","), df['average_rating'], df['loan_count'], df['text_reviews_count']], axis=1)
+
+    min_max_scaler = MinMaxScaler()
+    books_features = min_max_scaler.fit_transform(books_features)
+
+    model = neighbors.NearestNeighbors(n_neighbors = 6, algorithm = 'ball_tree')
+    model.fit(books_features)
+    distance, indices = model.kneighbors(books_features)
+
+    return distance, indices
+
+
+# 도서 이름으로 인덱스 찾기
+def get_index_from_name(name, df):
+    return df[df["bookname"] == name].index.tolist()[0]
+
+
+# 내가 검색한 책의 인기도와 유사한 책 5권 추천
+def print_similar_books(query, indices, df) :
+    data = []
+
+    if query :
+        found_id = get_index_from_name(query, df)
+
+        for id in indices[found_id][1:] :
+            dict = {}
+            dict['bookname'] = df.iloc[id]["bookname"]
+            dict['author'] = df.iloc[id]["author"]
+            dict['bookImageURL'] = df.iloc[id]["bookImageUrl"]
+
+            data.append(dict)
+
+    return data
+
+
+# ---------- MBTI ----------
 def mbti(request) :
     return render(request, 'mbti.html')
-
-
-def healing(request) :
-    return render(request, 'healing.html')
 
 
 # def exam1(request):
@@ -211,7 +275,67 @@ def healing(request) :
 #     return render(request, 'wordcloud.html')
 
 
-def keyword_info(request, keyword) :
-    healing_keyword = keyword
+# ---------- Healing ----------
+def healing(request) :
+    return render(request, 'healing.html')
 
+
+def keyword_info(request) :
+    healing_keyword = request.POST['keyword']
+    # print(healing_keyword)
+
+    book = HealingBook.objects.all()
+
+    cnt = 0
+    score_dict = {}
+    healing_keyword_book = []
+
+    # 클릭한 키워드가 들어가있는 도서 리스트 추출
+    for i in range(len(book)) :
+        if healing_keyword in book[i].keyword :
+            healing_keyword_book.append(book[i])
+            score_dict[str(cnt)] = float(book[i].positive_score)
+            cnt += 1
+
+    # 긍정점수를 기준으로 내림차순 정렬
+    score_list = sorted(score_dict.items(), key=lambda x : x[1], reverse=True)
+
+    data = []
+
+    # 긍정점수 상위 5개 도서에 대한 정보 저장
+    for i in range(5) :
+        book_dict = {}
+        book_dict['title'] = healing_keyword_book[int(score_list[i][0])].title
+        book_dict['author'] = healing_keyword_book[int(score_list[i][0])].author
+        book_dict['publisher'] = healing_keyword_book[int(score_list[i][0])].publisher
+        book_dict['image'] = healing_keyword_book[int(score_list[i][0])].image
+        book_dict['positive_score'] = round(float(healing_keyword_book[int(score_list[i][0])].positive_score), 2)
+
+        data.append(book_dict)
+
+    # print(data)
+
+    return JsonResponse(data, safe = False)
+
+
+# ---------- similarity ----------
+def similarity(request) :
+    return render(request, 'similarity.html')
+
+
+def search(request) :
+    word = request.POST['word']
+    # print(word)
     pass
+
+
+# 인덱스 찾기
+# def get_index_from_name(name) :
+#     return df[df['bookname'] == name].index.tolist()[0]
+
+
+# 특정단어를 통해 책 찾기
+# def get_id_from_partial_name(partial) :
+#     for name in all_books_names :
+#         if partial in name:
+#             print(name)

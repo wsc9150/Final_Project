@@ -62,12 +62,20 @@
 				</header>
 			</div>
 			<div class="first" id="first">
-
 			</div>
 
 			<div class="second">
-				<div id="bookInfo">
-				</div>
+				<table>
+					<tr>
+						<th style="text-align: center">책 제목</th>
+						<th style="text-align: center">저자</th>
+						<th style="text-align: center">출판사</th>
+						<th style="text-align: center">긍정점수</th>
+						<th style="text-align: center">책 표지</th>
+					</tr>
+					<tbody id="tbody">
+					</tbody>
+				</table>
 			</div>
 		</section>
 
@@ -118,8 +126,9 @@
 
             			.enter()
             			.append("a")
-						.attr("href", function(d) {
-							return "healing/keyword_info/" + d.keyword;
+            			.attr("href", "javascript:void(0);")
+						.attr("onclick", function(d) {
+							return "callFunction('" + d.keyword + "');";
 						})
             			.append("text")
               			.style("font-size", function(d) { return d.size + "px"; })
@@ -130,9 +139,32 @@
             			.text(function(d) { return d.keyword; });
 				}
 			}
+		</script>
+		<script>
+			function callFunction(keyword) {
+				$('#tbody').empty()
 
-			console.log(document.getElementsByTagName('text'));
-			console.log(document.getElementsByTagName('text')[0]);
+				// ajax 통신 - json
+				$.ajax({
+					url : "{% url 'keyword_info' %}",
+					type : "post",
+					data : {'csrfmiddlewaretoken' : '{{ csrf_token }}', keyword : keyword},
+					dataType : "json",
+					success : function(data) {
+						var txt = "";
+
+						$.each(data , function(idx, obj) {
+							txt += "<tr><td align='center' vertical-align='middle'>" + obj.title + "</td>";
+							txt += "<td align='center' vertical-align='middle'>" + obj.author + "</td>";
+							txt += "<td align='center' vertical-align='middle'>" + obj.publisher + "</td>";
+							txt += "<td align='center' vertical-align='middle'>" + obj.positive_score + "</td>";
+							txt += "<td style='text-align: center'><img src='" + obj.image + "' width='82px' height='113px'/>" + "</td></tr>";
+						});
+
+						$("#tbody").append(txt);
+					}
+				})
+			}
 		</script>
 	</body>
 </html>

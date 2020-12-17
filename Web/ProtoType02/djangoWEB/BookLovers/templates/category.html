@@ -16,14 +16,14 @@
 	<style>
 		.first {
 			float: left;
-			width: 48%;
-			margin-left: 20px;
+			width: 48.5%;
+			margin-left: 17px;
 		}
 
 		.second {
 			float: right;
-			width: 48%;
-			margin-right: 20px;
+			width: 48.5%;
+			margin-right: 17px;
 		}
 
 		.category {
@@ -36,7 +36,7 @@
 		}
 
 		th, td {
-			border: 1px solid #1abc9c;
+			border: 1px solid black;
 		}
 	</style>
 
@@ -127,6 +127,11 @@
 				<div id="bookInfo">
 				</div>
 			</div>
+
+			<div>
+				<table id="bookList">
+				</table>
+			</div>
 		</section>
 
 
@@ -136,10 +141,13 @@
 		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
 		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
 		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+
+		<!-- 조건 검색한 도서 리스트의 목록을 테이블에 출력 -->
 		<script>
 			$(document).ready(function() {
 				$('#searchBtn').click(function() {
 					$('#tbody').empty()
+					$('#bookList').empty()
 
 					// ajax 통신 - json
 					$.ajax({
@@ -161,6 +169,8 @@
 				})
 			})
 		</script>
+
+		<!-- 검색 결과로 나온 도서 이름을 클릭하면 해당 도서의 상세 정보 출력 -->
 		<script>
 			function callFunction(isbn13) {
 				$('#bookInfo').empty()
@@ -176,7 +186,7 @@
 
 						$.each(data , function(idx, obj) {
 							txt += "<p style='float: right; margin-right: 50px'>" + "<img src='" + obj.bookImageURL + "' width='200' height='302'/>" + "</p>";
-							txt += "<h2>" + obj.bookname + "</h2>";
+							txt += "<h2 id='bookName'>" + obj.bookname + "</h2>";
 							txt += "<dl><dt>저자</dt><dd>" + obj.authors + "</dd><br/>";
 							txt += "<dt>출판사</dt><dd>" + obj.publisher + "</dd><br/>";
 							txt += "<dt>출판년도</dt><dd>";
@@ -186,9 +196,62 @@
 								txt += "~";
 							txt += "</dd><br/>";
 							txt += "<dt>책 소개</dt><dd>" + obj.description + "</dd></dl>";
+							txt += "<button id='searchContent' type='button' onclick='callContentFunction();'>비슷한 책 내용의 도서 목록</button>&nbsp";
+							txt += "<button id='searchPopularity' type='button' onclick='callPopularityFunction();'>비슷한 인기도의 도서 목록</button>";
 						});
 
 						$("#bookInfo").append(txt);
+					}
+				})
+			}
+		</script>
+
+		<!-- 해당 도서 내용과 비슷한 도서 리스트 출력 -->
+		<script>
+			function callContentFunction() {
+				$('#bookList').empty()
+
+				// ajax 통신 - json
+				$.ajax({
+					url : "{% url 'content_info' %}",
+					type : "post",
+					data : {'csrfmiddlewaretoken' : '{{ csrf_token }}', bookName : $('#bookName').text()},
+					dataType : "json",
+					success : function(data) {
+						var txt = "";
+
+						$.each(data , function(idx, obj) {
+							txt += "<tr><td align='center' vertical-align='middle'><a href='javascript:void(0);' onclick='callFunction(" + obj.isbn13 + ");'>" + obj.bookname + "</a></td>";
+							txt += "<td style='text-align: center'>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
+						});
+
+						$("#bookList").append(txt);
+					}
+				})
+			}
+		</script>
+
+		<!-- 해당 도서의 인기도가 비슷한 도서 리스트 출력 -->
+		<script>
+			function callPopularityFunction() {
+				$('#bookList').empty()
+
+				// ajax 통신 - json
+				$.ajax({
+					url : "{% url 'popularity_info' %}",
+					type : "post",
+					data : {'csrfmiddlewaretoken' : '{{ csrf_token }}', bookName : $('#bookName').text()},
+					dataType : "json",
+					success : function(data) {
+						var txt = "";
+
+						$.each(data , function(idx, obj) {
+							txt += "<tr><td align='center' vertical-align='middle'>" + obj.bookname + "</td>";
+							txt += "<td align='center' vertical-align='middle'>" + obj.author + "</td>";
+							txt += "<td style='text-align: center'>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
+						});
+
+						$("#bookList").append(txt);
 					}
 				})
 			}
