@@ -28,5 +28,4 @@ urlpatterns = [
 
     # path('wordcloud/', views.wordcloud, name='wordcloud')
 
-
 ]

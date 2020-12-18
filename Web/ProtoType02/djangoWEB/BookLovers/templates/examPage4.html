@@ -13,95 +13,42 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
 		<style>
-            body::-webkit-scrollbar {
-                display: none;
-            }
-			h1{
-				width: 100%;
-				text-align: center;
-			}
-            #img{
-                width: 55%;
+            #container{
+                width: 100%;
                 height: 100%;
-                float: left;
-                margin-left: -280px;
-                padding-left: 10px;
-                padding-right: 10px;
-                position: absolute;
-                overflow: hidden;
+                margin: auto;
+                top:50%;
+                left:50%;
+            }
+            .q_a{
+                height: 90%;
+                width: 100%;
+                text-align : center;
+            }
+
+            .button{
+                width: 100%;
                 display: flex;
-                justify-content: center;
+                background-color: white;
+                justify-content: space-between;
             }
-            img{
-            	margin-top: 75px;
-            	width: 90%;
-            	margin-left: -20px;
-            	height: 82%;}
-            #question_container{
+            .more_book{
+                font-weight: 800;
+            }
+            .redo{
                 width: 50%;
-                height: 100%;
+                margin-top: -87px;
+                margin-right: 70px;
                 float: right;
             }
-            .question{
-            	margin-top: -20px;
-
-                position: absolute;
-            }
-            .q_a{
-                position: relative;
-            }
-            p, a {
-                color: black;
-            }
-            p{
-                font-size   : 25px;
-                font-style  : italic;
-                font-weight : 900;
-                font-color  : black;
-                margin-bottom : 20px;
-            }
-            a{
-                font-weight : 500;
-            }
-            a:hover {
-			text-decoration: none;
-			}
-            .q_a{
-                margin-top: 60px;
-            }
-            button{
-
-                padding-left: 5px;
-                padding-right: 5px;
-                font-weight: 800;
-                display: flex;
-                justify-content: space-between;
-                margin-top : 84px;
-                text-align: center;
+            .redo_mbti{
                 font-weight: 800;
             }
-			footer{
-				display:none;
+            .redo_mbti:hover {
+			    text-decoration: none;
 			}
-            /* 화면 너비 0 ~ 1200px */
-            @media (max-width: 1220px){
-                body{width: 100%; height: 100%;}
-                #img{width: 50%; margin-left: -50px; margin-top: 20px;}
-                #question_container{width: 50%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 768px */
-            @media (max-width: 768px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 480px */
-            @media (max-width: 480px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
+            .more_mbti{
+                font-weight: 800;
             }
 		</style>
 	</head>
@@ -126,61 +73,131 @@
 			</nav>
 
 		<!-- Main -->
-			<section id="main">
-				<div class="inner">
-					<header>
-						<h1>재미로 보는 MBTI 검사</h1>
-					</header>
-					<form action="{% url 'result' %}" method="post">
-						{% csrf_token %}
-						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
-						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<div id="img">
-							<img src="{% static 'BookLovers/images/TeensReadingBooks.jpg' %}"/>
-						</div>
-						<div id="question_container">
-							<div class="question">
-                                <div class="q_a">
-                                    <p>Q1. 당신의 시험 준비 어떻게 하셨나요?</p>
-                                    <input type="radio" name="exam4_Q1" value="J">
-                                    <a>1달 정도의 여유 기간과 함께 계획을 세워 차근차근 준비하였사옵니다아~</a><br>
-                                    <input type="radio" name="exam4_Q1" value="P">
-                                    <a>아직 시간 많이 남았어~ 벼!락!치!기! 하면 되지~!</a><br>
-                                </div>
-                                <div class="q_a">
-                                    <p>Q2. 독서왕 콘테스트에 나간 당신, 한 달에 책을 10권 읽어야 한다 . 이 때 나는</p>
-                                    <input type="radio" name="exam4_Q2" value="J">
-                                    <a>내가 읽고 싶은 한 책을 정주행하고 다음 책으로 넘어간다.</a><br>
-                                    <input type="radio" name="exam4_Q2" value="P">
-                                    <a>이 책 조금 읽고 저 책 조금읽고 왔다갔다 한 번에 여러 책을 읽는다.</a><br>
-                                </div>
-                                <div class="q_a">
-                                    <p>Q3. 회사에서 당신에게 일에 대한 자유를 주었습니다. 어찌하시겠습니까?</p>
-                                    <input type="radio" name="exam4_Q3" value="J">
-                                    <a>일의 목록을 먼저 확인한 다음 일정표를 만들어 진행한다.</a><br>
-                                    <input type="radio" name="exam4_Q3" value="P">
-                                    <a>지금 눈에 보이는 일이나 먼저 하고 싶은 일을 한다.</a><br>
-                                </div>
-								<button type="submit">go to next page</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</section>
+            <div id="wrap">
+                <section>
+                    <form action="{% url 'otherBook' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="mbti" value="{{mbti}}" />
+                        <div id="container">
+                            <div class="q_a">
+                                {% if mbti == 'INTJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ISTJ.jpg' %}" />
+                                {% elif mbti == 'INTP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_INTP.jpg' %}" />
+                                {% elif mbti == 'ENTJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ENTJ.jpg' %}" />
+                                {% elif mbti == 'ENTP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ENTP.jpg' %}" />
+                                {% elif mbti == 'INFJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_INFJ.jpg' %}" />
+                                {% elif mbti == 'INFP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_INFP.jpg' %}" />
+                                {% elif mbti == 'ENFJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ENFJ.jpg' %}" />
+                                {% elif mbti == 'ENFP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ENFP.jpg' %}" />
+                                {% elif mbti == 'ISTJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ISTJ.jpg' %}" />
+                                {% elif mbti == 'ISFJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ISFJ.jpg' %}" />
+                                {% elif mbti == 'ESTJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ESTJ.jpg' %}" />
+                                {% elif mbti == 'ESFJ' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ESFJ.jpg' %}" />
+                                {% elif mbti == 'ISTP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ISTP.jpg' %}" />
+                                {% elif mbti == 'ISFP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ISFP.jpg' %}" />
+                                {% elif mbti == 'ESTP' %}
+                                <img src="{% static 'BookLovers/images/MBTI_ESTP.jpg' %}" />
+                                {% else %}
+                                <img src="{% static 'BookLovers/images/MBTI_ESFP.jpg' %}" />
+                                {% endif %}
+                            </div>
+                            <div class="button">
+                                <button type="submit" class="more_book">내가 관심 가질만한 다른 책</button>
+                                {% if mbti == 'INTJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-intj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'INTP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-intp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ENTJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-entj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ENTP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-entp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'INFJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-infj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'INFP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-infp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ENFJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-enfj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ENFP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-enfp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ISTJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-istj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ISFJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-isfj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ESTJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-estj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ESFJ' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-esfj'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ISTP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-istp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ISFP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-isfp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% elif mbti == 'ESTP' %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-estp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% else %}
+                                <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-esfp'" >내 유형에 대해 더 알고 싶다면</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                    <div class="redo">
+                        <button class="redo_mbti" onClick="location.href='../mbti'">처음으로 돌아가기</button>
+                    </div>
+                </section>
+            </div>
 
-		<!-- Footer -->
+            <!-- Footer -->
 			<footer id="footer">
 				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="https://twitter.com/?lang=ko" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="https://www.facebook.com/" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="https://www.instagram.com/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
 				</ul>
 				<div class="copyright">
 					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
 				</div>
 			</footer>
+
+        <script>
+            $(document).ready(function(){
+                $('.more_book').click(function(){
+                    $.ajax({
+                        url: "{% url 'result_ajax' %}",
+                        type : "post",
+                        data : {'csrfmiddlewaretoken' : '{{ csrf_token }}' },
+                        dataType: "json",
+
+                        success:function(data)
+                        {
+                            var txt = "";
+                            $.each(data , function(idx, obj) {
+                                txt += "<tr><td align='center' vertical-align='middle'>" + obj.No + "</td>";
+                                txt += "<td align='center' vertical-align='middle'>" + obj.title + "</td>";
+                                txt += "<td align='center' vertical-align='middle'>" + obj.author + "</td>";
+                                txt += "<td align='center' vertical-align='middle'>" + obj.publisher + "</td>";
+                                txt += "<td style='text-align: center'>" + "<img src='" + obj.image + "' width='82px' height='113px'/>" + "</td></tr>";
+                            });
+
+                            $("#tbody").append(txt);
+                        }
+                    });
+                });
+            });
+        </script>
+
+
 
 		<!-- Scripts -->
 			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
@@ -191,99 +208,3 @@
 
 	</body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--{% load static %}-->
-<!--<html lang="en">-->
-<!--    <head>-->
-<!--        <meta charset="UTF-8">-->
-<!--        <title>Title</title>-->
-<!--        <style>-->
-<!--            #header {-->
-<!--                position: relative;-->
-<!--                z-index: 10000;-->
-<!--                left: 0;-->
-<!--                top: 0;-->
-<!--                width: 100%;-->
-<!--                background: rgba(255, 255, 255, 0.95);-->
-<!--                height: 3em;-->
-<!--                line-height: 3em;-->
-<!--                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);-->
-<!--                margin-top : 0px;-->
-<!--                text-align : center;-->
-<!--            }-->
-
-<!--            .button{-->
-<!--                display: flex;-->
-<!--                justify-content: space-between;-->
-<!--                margin-top : 20px;-->
-<!--                padding-right: 20px;-->
-<!--            }-->
-
-<!--            p{-->
-<!--                font-size   : 25px;-->
-<!--                font-style  : italic;-->
-<!--                font-weight : 900;-->
-<!--                font-color  : black;-->
-<!--            }-->
-
-<!--            section{-->
-<!--                background-image: url({% static 'images/book_img07.jpg' %});-->
-<!--                background-size: 100% 100%, cover;-->
-<!--                background-attachment: fixed, fixed;-->
-<!--                background-position: top left, center center;-->
-<!--                margin: auto;-->
-<!--                opacity: 0.5;-->
-<!--                position: absolute;-->
-<!--                height : 100%;-->
-<!--                width: 100%;-->
-<!--            }-->
-<!--            a:active{-->
-<!--                background-color: aqua;-->
-<!--            }-->
-<!--            body{-->
-<!--                overflow-x:hidden;-->
-<!--                overflow-y:hidden;-->
-<!--            }-->
-<!--        </style>-->
-<!--    </head>-->
-<!--    <body>-->
-<!--        <header id="header">-->
-<!--            <h1>psychological test J vs P</h1>-->
-<!--        </header>-->
-
-<!--        <section>-->
-<!--            <form action="{% url 'result' %}" method="post">-->
-<!--                {% csrf_token %}-->
-<!--                <div class="q_a">-->
-<!--                    <p>Q1. 당신의 시험 준비 어떻게 하셨나요?</p>-->
-<!--                    <input type="radio" name="exam4_Q1" value="J">-->
-<!--                    <a>1달 정도의 여유 기간과 함께 계획을 세워 차근차근 준비하였사옵니다아~</a><br>-->
-<!--                    <input type="radio" name="exam4_Q1" value="P">-->
-<!--                    <a>아직 시간 많이 남았어~ 벼!락!치!기! 하면 되지~!</a><br>-->
-<!--                </div>-->
-<!--                <div class="q_a">-->
-<!--                    <p>Q2. 독서왕 콘테스트에 나간 당신, 한 달에 책을 10권 읽어야 한다 . 이 때 나는</p>-->
-<!--                    <input type="radio" name="exam4_Q2" value="J">-->
-<!--                    <a>내가 읽고 싶은 한 책을 정주행하고 다음 책으로 넘어간다.</a><br>-->
-<!--                    <input type="radio" name="exam4_Q2" value="P">-->
-<!--                    <a>이 책 조금 읽고 저 책 조금읽고 왔다갔다 한 번에 여러 책을 읽는다.</a><br>-->
-<!--                </div>-->
-<!--                <div class="q_a">-->
-<!--                    <p>Q3. 회사에서 당신에게 일에 대한 자유를 주었습니다. 어찌하시겠습니까?</p>-->
-<!--                    <input type="radio" name="exam4_Q3" value="J">-->
-<!--                    <a>일의 목록을 먼저 확인한 다음 일정표를 만들어 진행한다.</a><br>-->
-<!--                    <input type="radio" name="exam4_Q3" value="P">-->
-<!--                    <a>지금 눈에 보이는 일이나 먼저 하고 싶은 일을 한다.</a><br>-->
-<!--                </div>-->
-<!--                <button type="submit">go to result page</button>-->
-<!--            </form>-->
-<!--&lt;!&ndash;            <div class="button">&ndash;&gt;-->
-<!--&lt;!&ndash;                <button type="button" onClick="location.href='/finalProject/exam3'" >go to Previous page</button>&ndash;&gt;-->
-<!--&lt;!&ndash;                <button type="button" onClick="location.href='/finalProject/result'" >go to next page</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        </section>-->
-<!--    </body>-->
-<!--    <script>-->
-
-<!--    </script>-->
-<!--</html>-->
