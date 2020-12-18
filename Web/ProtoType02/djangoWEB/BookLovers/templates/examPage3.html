@@ -1,93 +1,193 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Binary by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 {% load static %}
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-        <style>
-            #header {
-                position: relative;
-                z-index: 10000;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.95);
-                height: 3em;
-                line-height: 3em;
-                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);
-                margin-top : 0px;
-                text-align : center;
-            }
 
-            .button{
+<html>
+	<head>
+		<title>Generic - Binary by TEMPLATED</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
+		<style>
+            body::-webkit-scrollbar {
+                display: none;
+            }
+			h1{
+				width: 100%;
+				text-align: center;
+			}
+            #img{
+                width: 55%;
+                height: 100%;
+                float: left;
+                margin-left: -280px;
+                padding-left: 10px;
+                padding-right: 10px;
+                position: absolute;
+                overflow: hidden;
                 display: flex;
-                justify-content: space-between;
-                margin-top : 20px;
-                padding-right: 20px;
+                justify-content: center;
             }
+            img{
+            	margin-top: 75px;
+            	width: 90%;
+            	margin-left: -20px;
+            	height: 82%;}
+            #question_container{
+                width: 50%;
+                height: 100%;
+                float: right;
+            }
+            .question{
+            	margin-top: -20px;
 
+                position: absolute;
+            }
+            .q_a{
+                position: relative;
+            }
+            p, a {
+                color: black;
+            }
             p{
                 font-size   : 25px;
                 font-style  : italic;
                 font-weight : 900;
                 font-color  : black;
+                margin-bottom : 20px;
             }
+            a{
+                font-weight : 500;
+            }
+            a:hover {
+			text-decoration: none;
+			}
+            .q_a{
+                margin-top: 60px;
+            }
+            button{
 
-            section{
-                background-image: url({% static 'images/book_img07.jpg' %});
-                background-size: 100% 100%, cover;
-                background-attachment: fixed, fixed;
-                background-position: top left, center center;
-                margin: auto;
-                opacity: 0.5;
-                position: absolute;
-                height : 100%;
-                width: 100%;
+                padding-left: 5px;
+                padding-right: 5px;
+                font-weight: 800;
+                display: flex;
+                justify-content: space-between;
+                margin-top : 84px;
+                text-align: center;
+                font-weight: 800;
             }
-            a:active{
-                background-color: aqua;
+			footer{
+				display:none;
+			}
+            /* 화면 너비 0 ~ 1200px */
+            @media (max-width: 1220px){
+                body{width: 100%; height: 100%;}
+                #img{width: 50%; margin-left: -50px; margin-top: 20px;}
+                #question_container{width: 50%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
             }
-            body{
-                overflow-x:hidden;
-                overflow-y:hidden;
+            /* 화면 너비 0 ~ 768px */
+            @media (max-width: 768px){
+                body{width: 100%; height: 100%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
             }
-        </style>
-    </head>
-    <body>
-        <header id="header">
-            <h1>psychological test T vs F</h1>
-        </header>
+            /* 화면 너비 0 ~ 480px */
+            @media (max-width: 480px){
+                body{width: 100%; height: 100%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
+            }
+		</style>
+	</head>
+	<body>
 
-        <section>
-            <form action="{% url 'exam4' %}" method="post">
-                {% csrf_token %}
-                <div class="q_a">
-                    <p>Q1. 저는 _____ 한 사람이라는 소리를 종종 듣습니다.</p>
-                    <input type="radio" name="exam3_Q1" value="T">
-                    <a>cold</a><br>
-                    <input type="radio" name="exam3_Q1" value="F">
-                    <a>warm</a><br>
-                </div>
-                <div class="q_a">
-                    <p>Q2. 당신에게 친구가  “나 오늘 우울해서 책 한 권 샀어” 라고 말할 때 나의 반응은</p>
-                    <input type="radio" name="exam3_Q2" value='T'>
-                    <a>“너는 우울할 때 책을 사면 기분이 나아지는구나~”</a><br>
-                    <input type="radio" name="exam3_Q2" value='F'>
-                    <a>“힝...ㅠ 너 무슨일이야.. 왜 우울해...ㅠㅠㅠ”</a><br>
-                </div>
-                <div class="q_a">
-                    <p>Q3. 내 최애 책에 대해 설명할 때 나는</p>
-                    <input type="radio" name="exam3_Q3" value='T'>
-                    <a>“그 책은 말이야.. ~~ 시대를 배경으로 쓰여졌는데, 주인공인 xx가 자기 꿈을 찾아가는  내용을 담은 책이야 “ 라고 설명한다.</a><br>
-                    <input type="radio" name="exam3_Q3" value='F'>
-                    <a>“책 내용이 정말 내 맘에 와닿았어..ㅠㅠㅠㅠ” 라고 설명한다.</a><br>
-                </div>
-                <button type="submit">go to next page</button>
-            </form>
-<!--            <div class="button">-->
-<!--                <button type="button" onClick="location.href='/finalProject/exam2'" >go to Previous page</button>-->
-<!--                <button type="button" onClick="location.href='/finalProject/exam4'" >go to next page</button>-->
-<!--            </div>-->
-        </section>
-    </body>
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="../index">Home</a></li>
+					<li><a href="../index/category">Category</a></li>
+					<li><a href="../index/mbti">MBTI</a></li>
+					<li><a href="../index/healing">Healing</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<section id="main">
+				<div class="inner">
+					<header>
+						<h1>재미로 보는 MBTI 검사</h1>
+					</header>
+					<form action="{% url 'exam4' %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
+						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
+						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+						<div id="img">
+							<img src="{% static 'BookLovers/images/teens-reading-summer.jpg' %}"/>
+						</div>
+						<div id="question_container">
+							<div class="question">
+								<div class="q_a">
+									<p>Q7. 저는 _____ 한 사람이라는 소리를 종종 듣습니다.</p>
+									<input type="radio" name="exam3_Q1" value="T">
+									<a>cold</a><br>
+									<input type="radio" name="exam3_Q1" value="F">
+									<a>warm</a><br>
+								</div>
+								<div class="q_a">
+									<p>Q8. 당신에게 친구가  “나 오늘 우울해서 책 한 권 샀어” 라고 말할 때 나의 반응은</p>
+									<input type="radio" name="exam3_Q2" value='T'>
+									<a>“너는 우울할 때 책을 사면 기분이 나아지는구나~”</a><br>
+									<input type="radio" name="exam3_Q2" value='F'>
+									<a>“힝...ㅠ 너 무슨일이야.. 왜 우울해...ㅠㅠㅠ”</a><br>
+								</div>
+								<div class="q_a">
+									<p>Q9. 내 최애 책에 대해 설명할 때 나는</p>
+									<input type="radio" name="exam3_Q3" value='T'>
+									<a>“그 책은 말이야.. ~~ 시대를 배경으로 쓰여졌는데, 주인공인 xx가 자기 꿈을 찾아가는  내용을 담은 책이야 “ 라고 설명한다.</a><br>
+									<input type="radio" name="exam3_Q3" value='F'>
+									<a>“책 내용이 정말 내 맘에 와닿았어..ㅠㅠㅠㅠ” 라고 설명한다.</a><br>
+								</div>
+								<button type="submit">go to next page</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+				</ul>
+				<div class="copyright">
+					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+
+	</body>
 </html>

@@ -19,10 +19,14 @@ urlpatterns = [
     path('index/search', views.search, name="search"),
 
     # path('exam1/', views.exam1, name='exam1'),
-    # path('exam2/', views.exam2, name='exam2'),
-    # path('exam3/', views.exam3, name='exam3'),
-    # path('exam4/', views.exam4, name='exam4'),
-    # path('result/', views.result, name='result'),
+    path('index/exam2/', views.exam2, name='exam2'),
+    path('index/exam3/', views.exam3, name='exam3'),
+    path('index/exam4/', views.exam4, name='exam4'),
+    path('index/result/', views.result, name='result'),
+    path('index/result_ajax/', views.result_ajax, name='result_ajax'),
+    path('index/otherBook/', views.otherBook, name='otherBook'),
 
     # path('wordcloud/', views.wordcloud, name='wordcloud')
+
+
 ]

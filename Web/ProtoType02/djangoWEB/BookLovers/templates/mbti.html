@@ -12,6 +12,94 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
+		<style>
+			body::-webkit-scrollbar {
+                display: none;
+            }
+			h1{
+				width: 100%;
+				text-align: center;
+			}
+            #img{
+                width: 55%;
+                height: 100%;
+                float: left;
+                margin-left: -280px;
+                padding-left: 10px;
+                padding-right: 10px;
+                position: absolute;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+            }
+            img{
+            	margin-top: 75px;
+            	width: 85%;
+            	height: 75%;}
+            #question_container{
+                width: 50%;
+                height: 100%;
+                float: right;
+            }
+            .question{
+            	margin-top: -20px;
+                position: absolute;
+            }
+            .q_a{
+                position: relative;
+            }
+            p, a {
+                color: black;
+            }
+            p{
+                font-size   : 25px;
+                font-style  : italic;
+                font-weight : 900;
+                font-color  : black;
+                margin-bottom : 20px;
+            }
+            a{
+                font-weight : 500;
+            }
+			a:hover {
+			text-decoration: none;
+			}
+            .q_a{
+                margin-top: 60px;
+            }
+            button{
+
+                padding-left: 5px;
+                padding-right: 5px;
+                font-weight: 800;
+                display: flex;
+                justify-content: space-between;
+                margin-top : 84px;
+                text-align: center;
+                font-weight: 800;
+            }
+			footer{
+				display:none;
+			}
+            /* 화면 너비 0 ~ 1200px */
+            @media (max-width: 1220px){
+                body{width: 100%; height: 100%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
+            }
+            /* 화면 너비 0 ~ 768px */
+            @media (max-width: 768px){
+                body{width: 100%; height: 100%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
+            }
+            /* 화면 너비 0 ~ 480px */
+            @media (max-width: 480px){
+                body{width: 100%; height: 100%;}
+                img{margin-top: 45px; width: 85%; height: 75%;}
+                section {width: 100%; height: 100%;}
+            }
+		</style>
 	</head>
 	<body>
 
@@ -37,13 +125,45 @@
 			<section id="main">
 				<div class="inner">
 					<header>
-						<h1>Lorem ipsum dolor sit amet</h1>
-						<p class="info">3 days ago by <a href="#">Jane Doe</a></p>
+						<h1>재미로 보는 MBTI 검사</h1>
 					</header>
-					<p>Nullam posuere erat vel placerat rutrum. Praesent ac consectetur dui, et congue quam. Donec aliquam lacinia condimentum. Integer porta massa sapien, commodo sodales diam suscipit vitae. Aliquam quis felis sed urna semper semper. Phasellus eu scelerisque mi. Vivamus aliquam nisl libero, sit amet scelerisque ligula laoreet vel. Nunc ullamcorper ipsum at diam congue luctus. Sed nec sapien blandit, tempor quam non, consectetur turpis. Morbi libero lorem, hendrerit sed metus non, malesuada placerat nulla. Sed nisi turpis, rutrum eget rutrum euismod, consequat ullamcorper eros. Quisque tortor nunc, sodales convallis nisl non, bibendum tincidunt tortor. Etiam pellentesque tincidunt nunc, a dignissim dolor tempus et. Pellentesque in urna ligula. Fusce ligula velit, mollis ac diam non, rutrum fringilla turpis.</p>
-					<p>Aliquam consequat, nulla sed sodales convallis, sem odio porttitor justo, non volutpat augue libero eget neque. Nunc consequat arcu nec tortor venenatis tempus a placerat mauris. Nam ultricies consequat ligula, et placerat arcu ultrices a. Sed placerat ipsum lacus, at imperdiet nisi imperdiet at. Vivamus diam dui, accumsan quis lacinia ac, sollicitudin feugiat metus. Vestibulum a velit ac eros blandit molestie non eget erat. Nunc eget odio erat. Nulla sit amet enim pharetra tortor molestie tempor nec sed turpis. Cras eget odio at erat dictum tincidunt. Sed facilisis convallis mi, eget tempor nunc pellentesque pulvinar. Etiam volutpat luctus tristique.</p>
-					<p>Aliquam erat eros, pretium non facilisis id, mollis a lacus. Nam nunc nisl, consequat at est vel, ornare feugiat tortor. Phasellus tempor ex vel mi blandit convallis. Sed accumsan sapien quis bibendum posuere. Vivamus convallis mattis ipsum. Suspendisse viverra purus non mi cursus, vitae pulvinar dui condimentum. Donec dui lacus, pretium in neque vitae, laoreet tempus nulla. Maecenas ac augue bibendum, consectetur ante eu, vulputate ipsum.</p>
-					<p>Nullam volutpat, sem at hendrerit volutpat, magna orci facilisis purus, et venenatis sapien sapien pretium libero. Duis hendrerit eget metus at molestie. Duis leo lorem, interdum a placerat ut, ullamcorper at eros. Donec convallis auctor cursus. Integer placerat felis mauris, sed cursus diam sodales et. Phasellus mi nibh, scelerisque vulputate viverra ut, dictum vitae mi. In at blandit felis. Aenean id porttitor neque. Nam bibendum a orci non pretium. Pellentesque feugiat erat augue, quis venenatis diam mollis eu.</p>
+					<form action="{% url 'exam2' %}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
+						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
+						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+						<input type="hidden" name="mbti" value="{{mbti}}" />
+						<div id="img">
+							<img src="{% static 'BookLovers/images/teens-reading.jpg' %}"/>
+						</div>
+						<div id="question_container">
+							<div class="question">
+								<div class="q_a">
+									<p>Q1. 당신에게 꿀같은 휴가가 생겼을 때</p>
+									<input type="radio" name="exam1_Q1" value="E">
+									<a>‘자동차 주말여행 코스북’을 들고 당장 밖으로 나간다</a><br>
+									<input type="radio" name="exam1_Q1" value="I">
+									<a>‘백종원이 추천하는 집밥 메뉴 책’을 보고 요리를 한다</a><br>
+								</div>
+								<div class="q_a">
+									<p>Q2. 학창 시절 당신은 어떤 사람이었나요?</p>
+									<input type="radio" name="exam1_Q2" value="E">
+									<a>I’m top 인싸.</a><br>
+									<input type="radio" name="exam1_Q2" value="I">
+									<a>교내의 일은 나와 관련이 없소이다..</a><br>
+								</div>
+								<div class="q_a">
+									<p>Q3. 오랜만에 정말 인생책을 찾았을 때 나는</p>
+									<input type="radio" name="exam1_Q3" value="E">
+									<a>야 이 책 꼭 봐야돼.. 진짜 대박이야.. 꼭 읽어야 돼 진짜… 주변사람들에게 인생책이라며 추천한다.</a><br>
+									<input type="radio" name="exam1_Q3" value="I">
+									<a>오… 나만 알고 싶은 책이다… 이건 찐이야…. 혼자 인생책을 찾은 기쁨을 만끽한다.</a><br>
+								</div>
+								<button type="submit">go to next page</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</section>
 

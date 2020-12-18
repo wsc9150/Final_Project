@@ -14,9 +14,9 @@ from sqlalchemy import create_engine
 # Create your views here.
 
 # 데이터 불러오는 작업
-engine = create_engine('mysql+pymysql://root:1234@localhost/testdb', convert_unicode=True)
-conn = engine.connect()
-library_book_df = pd.read_sql_table('booklovers_librarybook', conn)
+# engine = create_engine('mysql+pymysql://root:1234@localhost/testdb', convert_unicode=True)
+# conn = engine.connect()
+# library_book_df = pd.read_sql_table('booklovers_librarybook', conn)
 
 
 def index(request) :
@@ -143,132 +143,217 @@ def print_similar_books(query, indices, df) :
 
 
 # ---------- MBTI ----------
+# exam1_mbti = []
+# exam2_mbti = []
+# exam3_mbti = []
+# exam4_mbti = []
+# MBTI = []
+
+
 def mbti(request) :
-    return render(request, 'mbti.html')
+    exam1_mbti = []
+    exam2_mbti = []
+    exam3_mbti = []
+    exam4_mbti = []
+
+    return render(request, 'mbti.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
 
 
-# def exam1(request):
-#     print(">>>>>>>>>>>>>>>>>>>> exam1 request")
-#     return render(request, 'examPage1.html')
+def exam2(request):
+    exam1_mbti = []
+    exam2_mbti = []
+    exam3_mbti = []
+    exam4_mbti = []
+
+    exam1_Q1 = request.POST.get('exam1_Q1', False)
+    exam1_Q2 = request.POST.get('exam1_Q2', False)
+    exam1_Q3 = request.POST.get('exam1_Q3', False)
+    # exam1_Q1 = request.POST['exam1_Q1']
+    # exam1_Q2 = request.POST['exam1_Q2']
+    # exam1_Q3 = request.POST['exam1_Q3']
+    E = 0
+    I = 0
+
+    if exam1_Q1 == "E":
+        E += 1
+    else:
+        I += 1
+    if exam1_Q2 == "E":
+        E += 1
+    else:
+        I += 1
+    if exam1_Q3 == "E":
+        E += 1
+    else:
+        I += 1
+
+    if E > I :
+        exam1_mbti.append("E")
+    else:
+        exam1_mbti.append("I")
+    print(">>>> ", exam1_Q1, exam1_Q2, exam1_Q3)
+    print(E, I)
+    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
+    return render(request, 'examPage2.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
 
 
-# def exam2(request):
-#     exam1_Q1 = request.POST['exam1_Q1']
-#     exam1_Q2 = request.POST['exam1_Q2']
-#     exam1_Q3 = request.POST['exam1_Q3']
-#     E = 0
-#     I = 0
-#
-#     if exam1_Q1 == "E":
-#         E += 1
-#     else:
-#         I += 1
-#     if exam1_Q2 == "E":
-#         E += 1
-#     else:
-#         I += 1
-#     if exam1_Q3 == "E":
-#         E += 1
-#     else:
-#         I += 1
-#
-#     if E > I :
-#         exam1_mbti.append("E")
-#     else:
-#         exam1_mbti.append("I")
-#     print(">>>> ", exam1_Q1, exam1_Q2, exam1_Q3)
-#     print(E, I, exam1_mbti)
-#     return render(request, 'examPage2.html')
+def exam3(request):
+    exam1_mbti = request.POST.get('exam1_mbti', False)
+    exam2_mbti = []
+    exam3_mbti = []
+    exam4_mbti = []
+
+    exam2_Q1 = request.POST.get('exam2_Q1', False)
+    exam2_Q2 = request.POST.get('exam2_Q2', False)
+    exam2_Q3 = request.POST.get('exam2_Q3', False)
+    # exam2_Q1   = request.POST['exam2_Q1']
+    # exam2_Q2   = request.POST['exam2_Q2']
+    # exam2_Q3   = request.POST['exam2_Q3']
+    S = 0
+    N = 0
+
+    if exam2_Q1 == "S":
+        S += 1
+    else:
+        N += 1
+    if exam2_Q2 == "S":
+        S += 1
+    else:
+        N += 1
+    if exam2_Q3 == "S":
+        S += 1
+    else:
+        N += 1
+
+    if S > N :
+        exam2_mbti.append("S")
+    else:
+        exam2_mbti.append("N")
+    print(">>>> ", exam2_Q1, exam2_Q2, exam2_Q3)
+    print(S, N)
+    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
+    return render(request, 'examPage3.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
 
 
-# def exam3(request):
-#     exam2_Q1   = request.POST['exam2_Q1']
-#     exam2_Q2   = request.POST['exam2_Q2']
-#     exam2_Q3   = request.POST['exam2_Q3']
-#     S = 0
-#     N = 0
-#
-#     if exam2_Q1 == "S":
-#         S += 1
-#     else:
-#         N += 1
-#     if exam2_Q2 == "S":
-#         S += 1
-#     else:
-#         N += 1
-#     if exam2_Q3 == "S":
-#         S += 1
-#     else:
-#         N += 1
-#
-#     if S > N :
-#         exam2_mbti.append("S")
-#     else:
-#         exam2_mbti.append("N")
-#     print(">>>> ", exam2_Q1, exam2_Q2, exam2_Q3)
-#     print(S, N, exam1_mbti, exam2_mbti)
-#     return render(request, 'examPage3.html')
+def exam4(request):
+    exam1_mbti = request.POST.get('exam1_mbti', False)
+    exam2_mbti = request.POST.get('exam2_mbti', False)
+    exam3_mbti = []
+    exam4_mbti = []
+
+    exam3_Q1 = request.POST.get('exam3_Q1', False)
+    exam3_Q2 = request.POST.get('exam3_Q2', False)
+    exam3_Q3 = request.POST.get('exam3_Q3', False)
+    # exam3_Q1 = request.POST['exam3_Q1']
+    # exam3_Q2 = request.POST['exam3_Q2']
+    # exam3_Q3 = request.POST['exam3_Q3']
+    T = 0
+    F = 0
+
+    if exam3_Q1 == "T":
+        T += 1
+    else:
+        F += 1
+    if exam3_Q2 == "T":
+        T += 1
+    else:
+        F += 1
+    if exam3_Q3 == "T":
+        T += 1
+    else:
+        F += 1
+
+    if T > F :
+        exam3_mbti.append("T")
+    else:
+        exam3_mbti.append("F")
+    print(">>>> ", exam3_Q1, exam3_Q2, exam3_Q3)
+    print(T, F)
+    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
+    return render(request, 'examPage4.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
 
 
-# def exam4(request):
-#     exam3_Q1 = request.POST['exam3_Q1']
-#     exam3_Q2 = request.POST['exam3_Q2']
-#     exam3_Q3 = request.POST['exam3_Q3']
-#     T = 0
-#     F = 0
-#
-#     if exam3_Q1 == "T":
-#         T += 1
-#     else:
-#         F += 1
-#     if exam3_Q2 == "T":
-#         T += 1
-#     else:
-#         F += 1
-#     if exam3_Q3 == "T":
-#         T += 1
-#     else:
-#         F += 1
-#
-#     if T > F :
-#         exam3_mbti.append("T")
-#     else:
-#         exam3_mbti.append("F")
-#     print(">>>> ", exam3_Q1, exam3_Q2, exam3_Q3)
-#     print(T, F, exam1_mbti, exam2_mbti, exam3_mbti)
-#     return render(request, 'examPage4.html')
+def result(request):
+    exam1_mbti = request.POST.get('exam1_mbti', False)
+    exam2_mbti = request.POST.get('exam2_mbti', False)
+    exam3_mbti = request.POST.get('exam3_mbti', False)
+    exam4_mbti = []
+
+    exam4_Q1 = request.POST.get('exam4_Q1', False)
+    exam4_Q2 = request.POST.get('exam4_Q2', False)
+    exam4_Q3 = request.POST.get('exam4_Q3', False)
+    # exam4_Q1 = request.POST['exam4_Q1']
+    # exam4_Q2 = request.POST['exam4_Q2']
+    # exam4_Q3 = request.POST['exam4_Q3']
+    J = 0
+    P = 0
+
+    if exam4_Q1 == "J":
+        J += 1
+    else:
+        P += 1
+    if exam4_Q2 == "J":
+        J += 1
+    else:
+        P += 1
+    if exam4_Q3 == "J":
+        J += 1
+    else:
+        P += 1
+
+    if J > P:
+        exam4_mbti.append("J")
+    else:
+        exam4_mbti.append("P")
+
+    # add_mbti += exam1_mbti + exam2_mbti + exam3_mbti + exam4_mbti
+    # mbti = "".join(add_mbti)
+    mbti = ""
+    mbti += exam1_mbti[2] + exam2_mbti[2] + exam3_mbti[2] + exam4_mbti[0]
 
 
-# def result(request):
-#     exam4_Q1 = request.POST['exam4_Q1']
-#     exam4_Q2 = request.POST['exam4_Q2']
-#     exam4_Q3 = request.POST['exam4_Q3']
-#     J = 0
-#     P = 0
-#
-#     if exam4_Q1 == "J":
-#         J += 1
-#     else:
-#         P += 1
-#     if exam4_Q2 == "J":
-#         J += 1
-#     else:
-#         P += 1
-#     if exam4_Q3 == "J":
-#         J += 1
-#     else:
-#         P += 1
-#
-#     if J > P:
-#         exam4_mbti.append("J")
-#     else:
-#         exam4_mbti.append("P")
-#
-#     mbti = str(exam1_mbti + exam2_mbti + exam3_mbti + exam4_mbti)
-#
-#     print(">>>> ", exam4_Q1, exam4_Q2, exam4_Q3)
-#     print(J, P, exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti, mbti)
-#     return render(request, 'resultPage.html')
+    print(">>>> ", exam4_Q1, exam4_Q2, exam4_Q3)
+    print(J, P, mbti)
+    print(exam1_mbti[2], exam2_mbti[2], exam3_mbti[2], exam4_mbti[0])
+    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
+    return render(request, 'resultPage.html', {'mbti' : mbti})
+
+
+def result_ajax(request):
+    MBTI = request.POST['MBTI']
+    book = pd.read_excel('C:/Users/lby52/data/final/mbti_revise/INTP_book_list_df_revise.xlsx', encoding='utf-8')
+
+    data = []
+    for i in range(len(book)) :
+        dict = {}
+
+        dict['No'] = str(book.loc[i]['No.'])
+        dict['title'] = book.loc[i]['title']
+        dict['author'] = book.loc[i]['author']
+        dict['publisher'] = book.loc[i]['publisher']
+        dict['image'] = book.loc[i]['image']
+        data.append(dict)
+
+    return JsonResponse(data, safe = False)
+
+
+def otherBook(request):
+    mbti = request.POST['mbti']
+    book = pd.read_excel(f'C:/Users/lby52/data/final/mbti_revise/{mbti}_book_list_df_revise.xlsx', encoding='utf-8')
+
+    data = []
+    for i in range(len(book)):
+        dict = {}
+
+        dict['No'] = str(book.loc[i]['No.'])
+        dict['title'] = book.loc[i]['title']
+        dict['author'] = book.loc[i]['author']
+        dict['publisher'] = book.loc[i]['publisher']
+        dict['image'] = book.loc[i]['image']
+        data.append(dict)
+
+    # print(">>>>>>>>>>>>>>>>>>>>>> " , mbti)
+    return render(request, 'result_otherBook.html', {'data' : data, 'mbti' : mbti})
 
 
 # def wordcloud(request) :
