@@ -10,13 +10,15 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import neighbors
 from sqlalchemy import create_engine
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
 
 # Create your views here.
 
 # 데이터 불러오는 작업
-# engine = create_engine('mysql+pymysql://root:1234@localhost/testdb', convert_unicode=True)
-# conn = engine.connect()
-# library_book_df = pd.read_sql_table('booklovers_librarybook', conn)
+engine = create_engine('mysql+pymysql://root:1234@localhost/testdb', convert_unicode=True)
+conn = engine.connect()
+library_book_df = pd.read_sql_table('booklovers_librarybook', conn)
 
 
 def index(request) :
@@ -50,7 +52,7 @@ def category_info(request) :
     from_age_url = '&from_age='
     to_age_url = '&to_age='
     kdc_url = '&kdc='
-    rest_url = '&pageNo=1&pageSize=5&format=json'
+    rest_url = '&pageNo=1&pageSize=10&format=json'
 
     final_url = start_url + api_key + gender_url + gender + from_age_url + age + to_age_url + to_age + kdc_url + genre + rest_url
 
@@ -92,10 +94,63 @@ def book_info(request) :
     return JsonResponse(data, safe = False)
 
 
+# 선택한 도서와 비슷한 내용의 도서 리스트 제공
 def content_info(request) :
     book_name = request.POST['bookName']
+    age = request.POST['ageType']
+
+    # 불용어 데이터 불러오기
+    sw = pd.read_csv('C:/Users/최우석/PycharmProjects/ProtoType02/djangoWEB/BookLovers/static/BookLovers/한국어불용어100.txt', sep="\t", engine='python', encoding="utf-8", header=None)
+    stop_words = list(sw[0].dropna())
+
+    # DB에서 도서 데이터 불러오기
+    if age == 0 :
+        book_df = pd.read_sql_table('booklovers_childbook', conn)
+    elif age == 14 :
+        book_df = pd.read_sql_table('booklovers_teenagerbook', conn)
+    elif age == 20 or age == 60 :
+        book_df = pd.read_sql_table('booklovers_adultbook', conn)
+    else :
+        book_df = pd.read_sql_table('booklovers_allbook', conn)
+
+    # TF_IDF 수행
+    tf = TfidfVectorizer(analyzer = 'word', ngram_range = (1, 2), min_df = 1, stop_words = stop_words)
+    tfidf_matrix = tf.fit_transform(book_df['intro'])
+
+    # TF_IDF 결과의 코사인유사도 계산
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+    titles = book_df['bookname']
+    indices = pd.Series(book_df.index, index = titles)
+
+    idx_list = get_recommendations(book_name, indices, cosine_sim)
+    data = []
+
+    for i in range(5) :
+        dict = {}
+
+        dict['bookname'] = book_df.loc[idx_list[i]]['bookname']
+        dict['author'] = book_df.loc[idx_list[i]]['author']
+        dict['publisher'] = book_df.loc[idx_list[i]]['publisher']
+        dict['bookImageURL'] = book_df.loc[idx_list[i]]['bookImageURL']
+
+        data.append(dict)
+
+    return JsonResponse(data, safe = False)
 
 
+# 코사인 유사도를 통한 데이터간 거리 비교
+def get_recommendations(title, indices, cosine_sim):
+    idx = indices[title]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key = lambda x : x[1], reverse = True)
+    sim_scores = sim_scores[1:31]
+    movie_indices = [i[0] for i in sim_scores]
+
+    return movie_indices
+
+
+# 선택한 도서와 비슷한 인기도를 가진 도서 리스트 제공
 def popularity_info(request) :
     book_name = request.POST['bookName']
 
@@ -133,8 +188,10 @@ def print_similar_books(query, indices, df) :
 
         for id in indices[found_id][1:] :
             dict = {}
+
             dict['bookname'] = df.iloc[id]["bookname"]
             dict['author'] = df.iloc[id]["author"]
+            dict['publisher'] = df.iloc[id]['publisher']
             dict['bookImageURL'] = df.iloc[id]["bookImageUrl"]
 
             data.append(dict)
@@ -143,34 +200,15 @@ def print_similar_books(query, indices, df) :
 
 
 # ---------- MBTI ----------
-# exam1_mbti = []
-# exam2_mbti = []
-# exam3_mbti = []
-# exam4_mbti = []
-# MBTI = []
-
-
 def mbti(request) :
-    exam1_mbti = []
-    exam2_mbti = []
-    exam3_mbti = []
-    exam4_mbti = []
-
-    return render(request, 'mbti.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
+    return render(request, 'mbti.html')
 
 
 def exam2(request):
-    exam1_mbti = []
-    exam2_mbti = []
-    exam3_mbti = []
-    exam4_mbti = []
-
     exam1_Q1 = request.POST.get('exam1_Q1', False)
     exam1_Q2 = request.POST.get('exam1_Q2', False)
     exam1_Q3 = request.POST.get('exam1_Q3', False)
-    # exam1_Q1 = request.POST['exam1_Q1']
-    # exam1_Q2 = request.POST['exam1_Q2']
-    # exam1_Q3 = request.POST['exam1_Q3']
+
     E = 0
     I = 0
 
@@ -178,37 +216,32 @@ def exam2(request):
         E += 1
     else:
         I += 1
+
     if exam1_Q2 == "E":
         E += 1
     else:
         I += 1
+
     if exam1_Q3 == "E":
         E += 1
     else:
         I += 1
 
     if E > I :
-        exam1_mbti.append("E")
+        exam1_mbti = "E"
     else:
-        exam1_mbti.append("I")
-    print(">>>> ", exam1_Q1, exam1_Q2, exam1_Q3)
-    print(E, I)
-    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
-    return render(request, 'examPage2.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
+        exam1_mbti = "I"
+
+    return render(request, 'examPage2.html', {'exam1_mbti' : exam1_mbti})
 
 
 def exam3(request):
     exam1_mbti = request.POST.get('exam1_mbti', False)
-    exam2_mbti = []
-    exam3_mbti = []
-    exam4_mbti = []
 
     exam2_Q1 = request.POST.get('exam2_Q1', False)
     exam2_Q2 = request.POST.get('exam2_Q2', False)
     exam2_Q3 = request.POST.get('exam2_Q3', False)
-    # exam2_Q1   = request.POST['exam2_Q1']
-    # exam2_Q2   = request.POST['exam2_Q2']
-    # exam2_Q3   = request.POST['exam2_Q3']
+
     S = 0
     N = 0
 
@@ -216,37 +249,33 @@ def exam3(request):
         S += 1
     else:
         N += 1
+
     if exam2_Q2 == "S":
         S += 1
     else:
         N += 1
+
     if exam2_Q3 == "S":
         S += 1
     else:
         N += 1
 
     if S > N :
-        exam2_mbti.append("S")
+        exam2_mbti = "S"
     else:
-        exam2_mbti.append("N")
-    print(">>>> ", exam2_Q1, exam2_Q2, exam2_Q3)
-    print(S, N)
-    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
-    return render(request, 'examPage3.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
+        exam2_mbti = "N"
+
+    return render(request, 'examPage3.html', {'exam1_mbti' : exam1_mbti, 'exam2_mbti' : exam2_mbti})
 
 
 def exam4(request):
     exam1_mbti = request.POST.get('exam1_mbti', False)
     exam2_mbti = request.POST.get('exam2_mbti', False)
-    exam3_mbti = []
-    exam4_mbti = []
 
     exam3_Q1 = request.POST.get('exam3_Q1', False)
     exam3_Q2 = request.POST.get('exam3_Q2', False)
     exam3_Q3 = request.POST.get('exam3_Q3', False)
-    # exam3_Q1 = request.POST['exam3_Q1']
-    # exam3_Q2 = request.POST['exam3_Q2']
-    # exam3_Q3 = request.POST['exam3_Q3']
+
     T = 0
     F = 0
 
@@ -254,37 +283,34 @@ def exam4(request):
         T += 1
     else:
         F += 1
+
     if exam3_Q2 == "T":
         T += 1
     else:
         F += 1
+
     if exam3_Q3 == "T":
         T += 1
     else:
         F += 1
 
     if T > F :
-        exam3_mbti.append("T")
+        exam3_mbti = "T"
     else:
-        exam3_mbti.append("F")
-    print(">>>> ", exam3_Q1, exam3_Q2, exam3_Q3)
-    print(T, F)
-    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
-    return render(request, 'examPage4.html', {'exam1_mbti': exam1_mbti, 'exam2_mbti': exam2_mbti, 'exam3_mbti': exam3_mbti, 'exam4_mbti': exam4_mbti})
+        exam3_mbti = "F"
+
+    return render(request, 'examPage4.html', {'exam1_mbti' : exam1_mbti, 'exam2_mbti' : exam2_mbti, 'exam3_mbti' : exam3_mbti})
 
 
 def result(request):
     exam1_mbti = request.POST.get('exam1_mbti', False)
     exam2_mbti = request.POST.get('exam2_mbti', False)
     exam3_mbti = request.POST.get('exam3_mbti', False)
-    exam4_mbti = []
 
     exam4_Q1 = request.POST.get('exam4_Q1', False)
     exam4_Q2 = request.POST.get('exam4_Q2', False)
     exam4_Q3 = request.POST.get('exam4_Q3', False)
-    # exam4_Q1 = request.POST['exam4_Q1']
-    # exam4_Q2 = request.POST['exam4_Q2']
-    # exam4_Q3 = request.POST['exam4_Q3']
+
     J = 0
     P = 0
 
@@ -292,54 +318,31 @@ def result(request):
         J += 1
     else:
         P += 1
+
     if exam4_Q2 == "J":
         J += 1
     else:
         P += 1
+
     if exam4_Q3 == "J":
         J += 1
     else:
         P += 1
 
     if J > P:
-        exam4_mbti.append("J")
+        exam4_mbti = "J"
     else:
-        exam4_mbti.append("P")
+        exam4_mbti = "P"
 
-    # add_mbti += exam1_mbti + exam2_mbti + exam3_mbti + exam4_mbti
-    # mbti = "".join(add_mbti)
     mbti = ""
-    mbti += exam1_mbti[2] + exam2_mbti[2] + exam3_mbti[2] + exam4_mbti[0]
+    mbti += exam1_mbti + exam2_mbti + exam3_mbti + exam4_mbti
 
-
-    print(">>>> ", exam4_Q1, exam4_Q2, exam4_Q3)
-    print(J, P, mbti)
-    print(exam1_mbti[2], exam2_mbti[2], exam3_mbti[2], exam4_mbti[0])
-    print(exam1_mbti, exam2_mbti, exam3_mbti, exam4_mbti)
     return render(request, 'resultPage.html', {'mbti' : mbti})
-
-
-def result_ajax(request):
-    MBTI = request.POST['MBTI']
-    book = pd.read_excel('C:/Users/lby52/data/final/mbti_revise/INTP_book_list_df_revise.xlsx', encoding='utf-8')
-
-    data = []
-    for i in range(len(book)) :
-        dict = {}
-
-        dict['No'] = str(book.loc[i]['No.'])
-        dict['title'] = book.loc[i]['title']
-        dict['author'] = book.loc[i]['author']
-        dict['publisher'] = book.loc[i]['publisher']
-        dict['image'] = book.loc[i]['image']
-        data.append(dict)
-
-    return JsonResponse(data, safe = False)
 
 
 def otherBook(request):
     mbti = request.POST['mbti']
-    book = pd.read_excel(f'C:/Users/lby52/data/final/mbti_revise/{mbti}_book_list_df_revise.xlsx', encoding='utf-8')
+    book = pd.read_excel(f'C:/Users/최우석/PycharmProjects/ProtoType02/djangoWEB/BookLovers/csv/{mbti}_book_list_df_revise.xlsx', encoding='utf-8')
 
     data = []
     for i in range(len(book)):
@@ -352,12 +355,7 @@ def otherBook(request):
         dict['image'] = book.loc[i]['image']
         data.append(dict)
 
-    # print(">>>>>>>>>>>>>>>>>>>>>> " , mbti)
     return render(request, 'result_otherBook.html', {'data' : data, 'mbti' : mbti})
-
-
-# def wordcloud(request) :
-#     return render(request, 'wordcloud.html')
 
 
 # ---------- Healing ----------
@@ -365,6 +363,7 @@ def healing(request) :
     return render(request, 'healing.html')
 
 
+# 선택한 힐링 키워드를 가지고 있는 도서 리스트 제공
 def keyword_info(request) :
     healing_keyword = request.POST['keyword']
     # print(healing_keyword)
@@ -401,26 +400,3 @@ def keyword_info(request) :
     # print(data)
 
     return JsonResponse(data, safe = False)
-
-
-# ---------- similarity ----------
-def similarity(request) :
-    return render(request, 'similarity.html')
-
-
-def search(request) :
-    word = request.POST['word']
-    # print(word)
-    pass
-
-
-# 인덱스 찾기
-# def get_index_from_name(name) :
-#     return df[df['bookname'] == name].index.tolist()[0]
-
-
-# 특정단어를 통해 책 찾기
-# def get_id_from_partial_name(partial) :
-#     for name in all_books_names :
-#         if partial in name:
-#             print(name)

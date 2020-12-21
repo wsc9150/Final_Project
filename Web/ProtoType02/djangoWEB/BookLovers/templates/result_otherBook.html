@@ -8,176 +8,149 @@
 
 <html>
 	<head>
-		<title>Generic - Binary by TEMPLATED</title>
+		<title>{{ mbti }} - Other Book</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
 		<style>
-            #container{
+            #container {
                 width: 100%;
                 height: 100%;
                 margin: auto;
                 top:50%;
                 left:50%;
             }
-            .q_a{
+
+            .q_a {
                 height: 90%;
                 width: 100%;
                 text-align : center;
             }
 
-            .button{
+            .button {
                 width: 100%;
                 display: flex;
                 background-color: white;
                 justify-content: space-between;
             }
-            .more_book{
+
+            .more_book {
                 font-weight: 800;
             }
-            .redo{
+
+            .redo {
                 width: 50%;
                 margin-top: -87px;
                 margin-right: 70px;
                 float: right;
             }
-            .redo_mbti{
+
+            .redo_mbti {
                 font-weight: 800;
             }
+
             .redo_mbti:hover {
 			    text-decoration: none;
 			}
-            .more_mbti{
+
+            .more_mbti {
                 font-weight: 800;
             }
+
+            .info {
+				color: #444;
+				text-align: center;
+            }
+
+            th, td {
+				text-align: center;
+				align: center;
+				vertical-align: middle;
+			}
 		</style>
 	</head>
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
-				<nav>
-					<a href="#menu">Menu</a>
-				</nav>
-			</header>
+		<header id="header">
+			<a href="../index" class="logo"><strong>Book Lovers</strong></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../index">Home</a></li>
-					<li><a href="../index/category">Category</a></li>
-					<li><a href="../index/mbti">MBTI</a></li>
-					<li><a href="../index/healing">Healing</a></li>
-				</ul>
-			</nav>
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
 
         <!-- Main -->
-            <div class="container">
-                <div class="table-responsive">
-                    <div style="margin-top: 25px;">
-                    <h1 align="center" >내가 관심 가질만한 다른 책</h1>
-                    <br />
-
-                    <div align="center">
-                        <table class="table table-bordered table-hover table-condensed">
-                            <thead>
-                                <tr>
-                                    <th title="Filed #1">No.</th>
-                                    <th title="Field #2">title</th>
-                                    <th title="Field #3">author</th>
-                                    <th title="Field #4">publisher</th>
-                                    <th title="Field #5">image</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody">
-                                {% if data %}
-                                {% for i in data %}
-                                <tr>
-                                    <td>{{ i.No }}</td>
-                                    <td>{{ i.title }}</td>
-                                    <td>{{ i.author }}</td>
-                                    <td>{{ i.publisher }}</td>
-                                    <td><img src="{{ i.image }}" width="82px" height="102px"/></td>
-                                </tr>
-                                {% endfor %}
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <br />
-                    <div id="employee_table">
-                    </div>
-                </div>
-            </div>
+		<section id="main">
+			<div class="inner">
+				<header>
+					<p class="info">MBTI Recommendation < <strong style="color: #1abc9c;">{{ mbti }}</strong> > - 내가 관심 가질 만한 다른 책</p>
+				</header>
+			</div>
+			<div class="container">
+				<div class="table-responsive">
+					<div style="margin-top: 25px;">
+						<div align="center">
+							<table class="table table-bordered table-hover table-condensed">
+								<thead>
+									<tr>
+										<th title="Filed #1" style="text-align: center;">No.</th>
+										<th title="Field #2" style="text-align: center;">title</th>
+										<th title="Field #3" style="text-align: center;">author</th>
+										<th title="Field #4" style="text-align: center;">publisher</th>
+										<th title="Field #5" style="text-align: center;">image</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+									{% if data %}
+									{% for i in data %}
+									<tr>
+										<td>{{ i.No }}</td>
+										<td>{{ i.title }}</td>
+										<td>{{ i.author }}</td>
+										<td>{{ i.publisher }}</td>
+										<td><img src="{{ i.image }}" width="82px" height="102px"/></td>
+									</tr>
+									{% endfor %}
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<br />
+					<div id="employee_table">
+					</div>
+				</div>
+			</div>
+		</section>
 
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+			</ul>
+			<div class="copyright">
+				&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+			</div>
+		</footer>
 
 		<!-- Scripts -->
-			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
 
 	</body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--    <title>CSV File to HTML Table Using AJAX jQuery</title>-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <div class="container">-->
-<!--        <div class="table-responsive">-->
-<!--            <h1 align="center">{{ mbti }}</h1>-->
-<!--            <br />-->
-
-<!--            <div align="center">-->
-<!--                <table class="table table-bordered table-hover table-condensed">-->
-<!--                    <thead>-->
-<!--                        <tr>-->
-<!--                            <th title="Filed #1">No.</th>-->
-<!--                            <th title="Field #2">title</th>-->
-<!--                            <th title="Field #3">author</th>-->
-<!--                            <th title="Field #4">publisher</th>-->
-<!--                            <th title="Field #5">image</th>-->
-<!--                        </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody id="tbody">-->
-<!--                        {% if data %}-->
-<!--                        {% for i in data %}-->
-<!--                        <tr>-->
-<!--                            <td>{{ i.No }}</td>-->
-<!--                            <td>{{ i.title }}</td>-->
-<!--                            <td>{{ i.author }}</td>-->
-<!--                            <td>{{ i.publisher }}</td>-->
-<!--                            <td><img src="{{ i.image }}" width="82px" height="102px"/></td>-->
-<!--                        </tr>-->
-<!--                        {% endfor %}-->
-<!--                        {% endif %}-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
-<!--            <br />-->
-<!--            <div id="employee_table">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--</body>-->
-<!--</html>-->
-

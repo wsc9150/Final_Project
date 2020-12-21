@@ -11,21 +11,12 @@ urlpatterns = [
     path('index/popularity_info', views.popularity_info, name="popularity_info"),
 
     path('index/mbti', views.mbti, name="mbti"),
+    path('index/exam2', views.exam2, name='exam2'),
+    path('index/exam3', views.exam3, name='exam3'),
+    path('index/exam4', views.exam4, name='exam4'),
+    path('index/result', views.result, name='result'),
+    path('index/otherBook', views.otherBook, name='otherBook'),
 
     path('index/healing', views.healing, name="healing"),
     path('index/keyword_info', views.keyword_info, name="keyword_info"),
-
-    path('index/similarity', views.similarity, name="similarity"),
-    path('index/search', views.search, name="search"),
-
-    # path('exam1/', views.exam1, name='exam1'),
-    path('index/exam2/', views.exam2, name='exam2'),
-    path('index/exam3/', views.exam3, name='exam3'),
-    path('index/exam4/', views.exam4, name='exam4'),
-    path('index/result/', views.result, name='result'),
-    path('index/result_ajax/', views.result_ajax, name='result_ajax'),
-    path('index/otherBook/', views.otherBook, name='otherBook'),
-
-    # path('wordcloud/', views.wordcloud, name='wordcloud')
-
 ]

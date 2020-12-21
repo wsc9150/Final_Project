@@ -8,7 +8,7 @@
 
 <html>
 	<head>
-		<title>Generic - Binary by TEMPLATED</title>
+		<title>MBTI Test - 3</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
@@ -16,11 +16,13 @@
             body::-webkit-scrollbar {
                 display: none;
             }
-			h1{
+
+			h1 {
 				width: 100%;
 				text-align: center;
 			}
-            #img{
+
+            #img {
                 width: 55%;
                 height: 100%;
                 float: left;
@@ -32,45 +34,47 @@
                 display: flex;
                 justify-content: center;
             }
-            img{
-            	margin-top: 75px;
-            	width: 90%;
-            	margin-left: -20px;
-            	height: 82%;}
-            #question_container{
+
+            #question_container {
                 width: 50%;
                 height: 100%;
                 float: right;
             }
-            .question{
-            	margin-top: -20px;
 
+            .question {
+            	margin-top: -20px;
                 position: absolute;
             }
-            .q_a{
+
+            .q_a {
                 position: relative;
             }
+
             p, a {
                 color: black;
             }
-            p{
+
+            p {
                 font-size   : 25px;
                 font-style  : italic;
                 font-weight : 900;
                 font-color  : black;
                 margin-bottom : 20px;
             }
-            a{
+
+            a {
                 font-weight : 500;
             }
-            a:hover {
-			text-decoration: none;
-			}
-            .q_a{
-                margin-top: 60px;
-            }
-            button{
 
+            a:hover {
+				text-decoration: none;
+			}
+
+            .q_a {
+                margin-top: 50px;
+            }
+
+            button{
                 padding-left: 5px;
                 padding-right: 5px;
                 font-weight: 800;
@@ -80,114 +84,132 @@
                 text-align: center;
                 font-weight: 800;
             }
-			footer{
+
+			footer {
 				display:none;
 			}
-            /* 화면 너비 0 ~ 1200px */
-            @media (max-width: 1220px){
-                body{width: 100%; height: 100%;}
-                #img{width: 50%; margin-left: -50px; margin-top: 20px;}
-                #question_container{width: 50%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 768px */
-            @media (max-width: 768px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 480px */
-            @media (max-width: 480px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
+
+			.info {
+				color: #444;
+				text-align: center;
             }
 		</style>
 	</head>
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
-				<nav>
-					<a href="#menu">Menu</a>
-				</nav>
-			</header>
+		<header id="header">
+			<a href="../index" class="logo"><strong>Book Lovers</strong></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
+
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../index">Home</a></li>
-					<li><a href="../index/category">Category</a></li>
-					<li><a href="../index/mbti">MBTI</a></li>
-					<li><a href="../index/healing">Healing</a></li>
-				</ul>
-			</nav>
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
+
 
 		<!-- Main -->
-			<section id="main">
-				<div class="inner">
-					<header>
-						<h1>재미로 보는 MBTI 검사</h1>
-					</header>
-					<form action="{% url 'exam4' %}" method="post">
-						{% csrf_token %}
-						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
-						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<div id="img">
-							<img src="{% static 'BookLovers/images/teens-reading-summer.jpg' %}"/>
-						</div>
-						<div id="question_container">
-							<div class="question">
-								<div class="q_a">
-									<p>Q7. 저는 _____ 한 사람이라는 소리를 종종 듣습니다.</p>
-									<input type="radio" name="exam3_Q1" value="T">
-									<a>cold</a><br>
-									<input type="radio" name="exam3_Q1" value="F">
-									<a>warm</a><br>
-								</div>
-								<div class="q_a">
-									<p>Q8. 당신에게 친구가  “나 오늘 우울해서 책 한 권 샀어” 라고 말할 때 나의 반응은</p>
-									<input type="radio" name="exam3_Q2" value='T'>
-									<a>“너는 우울할 때 책을 사면 기분이 나아지는구나~”</a><br>
-									<input type="radio" name="exam3_Q2" value='F'>
-									<a>“힝...ㅠ 너 무슨일이야.. 왜 우울해...ㅠㅠㅠ”</a><br>
-								</div>
-								<div class="q_a">
-									<p>Q9. 내 최애 책에 대해 설명할 때 나는</p>
-									<input type="radio" name="exam3_Q3" value='T'>
-									<a>“그 책은 말이야.. ~~ 시대를 배경으로 쓰여졌는데, 주인공인 xx가 자기 꿈을 찾아가는  내용을 담은 책이야 “ 라고 설명한다.</a><br>
-									<input type="radio" name="exam3_Q3" value='F'>
-									<a>“책 내용이 정말 내 맘에 와닿았어..ㅠㅠㅠㅠ” 라고 설명한다.</a><br>
-								</div>
-								<button type="submit">go to next page</button>
+		<section id="main">
+			<div class="inner">
+				<header>
+					<p class="info">MBTI Test - 재미로 보는 MBTI 검사 p.3</p>
+				</header>
+				<form action="{% url 'exam4' %}" method="post">
+					{% csrf_token %}
+
+					<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
+					<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
+					<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+					<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+
+					<div id="img">
+						<img src="{% static 'BookLovers/images/teens-reading-summer.jpg' %}" width="70%" height="70%"/>
+					</div>
+
+					<div id="question_container">
+						<div class="question">
+							<div class="q_a">
+								<p>Q7. 저는 _____ 한 사람이라는 소리를 종종 듣습니다.</p>
+
+								<input type="radio" name="exam3_Q1" value="T">
+								<a>cold</a><br>
+
+								<input type="radio" name="exam3_Q1" value="F">
+								<a>warm</a><br>
 							</div>
+							<div class="q_a">
+								<p>Q8. 당신에게 친구가 "나 오늘 우울해서 책 한 권 샀어" 라고 말할 때 나의 첫마디는?</p>
+
+								<input type="radio" name="exam3_Q2" value='T'>
+								<a>"우울해서 책을 샀다구..? 무슨 책 샀는데?"</a><br>
+
+								<input type="radio" name="exam3_Q2" value='F'>
+								<a>"힝...ㅠ 너 무슨일이야.. 왜 우울해...ㅠㅠㅠ"</a><br>
+							</div>
+							<div class="q_a">
+								<p>Q9. 내 최애 책에 대해 설명할 때 나는</p>
+
+								<input type="radio" name="exam3_Q3" value='T'>
+								<a>"그 책은 말이야.. ~~ 내용을 담은 책이야." 라고 설명한다.</a><br>
+
+								<input type="radio" name="exam3_Q3" value='F'>
+								<a>"책 내용이 정말 내 맘에 와닿았어..ㅠㅠㅠㅠ" 라고 설명한다.</a><br>
+							</div>
+
+							<button type="submit" id="check">go to next page</button>
 						</div>
-					</form>
-				</div>
-			</section>
+					</div>
+				</form>
+			</div>
+		</section>
+
 
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+			</ul>
+			<div class="copyright">
+				&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+			</div>
+		</footer>
+
 
 		<!-- Scripts -->
-			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script>
+			$('#check').click(function() {
+				if (document.getElementsByName('exam3_Q1')[0].checked == false && document.getElementsByName('exam3_Q1')[1].checked == false) {
+					alert("7번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam3_Q2')[0].checked == false && document.getElementsByName('exam3_Q2')[1].checked == false) {
+					alert("8번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam3_Q3')[0].checked == false && document.getElementsByName('exam3_Q3')[1].checked == false) {
+					alert("9번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+			})
+		</script>
 
 	</body>
 </html>

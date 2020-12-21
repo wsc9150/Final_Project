@@ -8,7 +8,7 @@
 
 <html>
 	<head>
-		<title>Generic - Binary by TEMPLATED</title>
+		<title>MBTI Test - 1</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
@@ -16,11 +16,13 @@
 			body::-webkit-scrollbar {
                 display: none;
             }
-			h1{
+
+			h1 {
 				width: 100%;
 				text-align: center;
 			}
-            #img{
+
+            #img {
                 width: 55%;
                 height: 100%;
                 float: left;
@@ -32,43 +34,53 @@
                 display: flex;
                 justify-content: center;
             }
-            img{
-            	margin-top: 75px;
-            	width: 85%;
-            	height: 75%;}
-            #question_container{
+
+            img {
+            	// margin-top: 75px;
+            	// width: 85%;
+            	// height: 75%;
+            }
+
+            #question_container {
                 width: 50%;
                 height: 100%;
                 float: right;
             }
-            .question{
+
+            .question {
             	margin-top: -20px;
                 position: absolute;
             }
-            .q_a{
+
+            .q_a {
                 position: relative;
             }
+
             p, a {
                 color: black;
             }
-            p{
+
+            p {
                 font-size   : 25px;
                 font-style  : italic;
                 font-weight : 900;
                 font-color  : black;
                 margin-bottom : 20px;
             }
-            a{
+
+            a {
                 font-weight : 500;
             }
-			a:hover {
-			text-decoration: none;
-			}
-            .q_a{
-                margin-top: 60px;
-            }
-            button{
 
+			a:hover {
+				text-decoration: none;
+			}
+
+            .q_a {
+                margin-top: 50px;
+            }
+
+            button {
                 padding-left: 5px;
                 padding-right: 5px;
                 font-weight: 800;
@@ -78,113 +90,134 @@
                 text-align: center;
                 font-weight: 800;
             }
-			footer{
+
+			footer {
 				display:none;
 			}
-            /* 화면 너비 0 ~ 1200px */
-            @media (max-width: 1220px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 768px */
-            @media (max-width: 768px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 480px */
-            @media (max-width: 480px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
+
+			.info {
+				color: #444;
+				text-align: center;
             }
 		</style>
 	</head>
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
-				<nav>
-					<a href="#menu">Menu</a>
-				</nav>
-			</header>
+		<header id="header">
+			<a href="../index" class="logo"><strong>Book Lovers</strong></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
+
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../index">Home</a></li>
-					<li><a href="../index/category">Category</a></li>
-					<li><a href="../index/mbti">MBTI</a></li>
-					<li><a href="../index/healing">Healing</a></li>
-				</ul>
-			</nav>
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
+
 
 		<!-- Main -->
-			<section id="main">
-				<div class="inner">
-					<header>
-						<h1>재미로 보는 MBTI 검사</h1>
-					</header>
-					<form action="{% url 'exam2' %}" method="post">
-						{% csrf_token %}
-						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
-						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<input type="hidden" name="mbti" value="{{mbti}}" />
-						<div id="img">
-							<img src="{% static 'BookLovers/images/teens-reading.jpg' %}"/>
-						</div>
-						<div id="question_container">
-							<div class="question">
-								<div class="q_a">
-									<p>Q1. 당신에게 꿀같은 휴가가 생겼을 때</p>
-									<input type="radio" name="exam1_Q1" value="E">
-									<a>‘자동차 주말여행 코스북’을 들고 당장 밖으로 나간다</a><br>
-									<input type="radio" name="exam1_Q1" value="I">
-									<a>‘백종원이 추천하는 집밥 메뉴 책’을 보고 요리를 한다</a><br>
-								</div>
-								<div class="q_a">
-									<p>Q2. 학창 시절 당신은 어떤 사람이었나요?</p>
-									<input type="radio" name="exam1_Q2" value="E">
-									<a>I’m top 인싸.</a><br>
-									<input type="radio" name="exam1_Q2" value="I">
-									<a>교내의 일은 나와 관련이 없소이다..</a><br>
-								</div>
-								<div class="q_a">
-									<p>Q3. 오랜만에 정말 인생책을 찾았을 때 나는</p>
-									<input type="radio" name="exam1_Q3" value="E">
-									<a>야 이 책 꼭 봐야돼.. 진짜 대박이야.. 꼭 읽어야 돼 진짜… 주변사람들에게 인생책이라며 추천한다.</a><br>
-									<input type="radio" name="exam1_Q3" value="I">
-									<a>오… 나만 알고 싶은 책이다… 이건 찐이야…. 혼자 인생책을 찾은 기쁨을 만끽한다.</a><br>
-								</div>
-								<button type="submit">go to next page</button>
-							</div>
-						</div>
-					</form>
+		<section id="main">
+			<div class="inner">
+				<header>
+					<p class="info">MBTI Test - 재미로 보는 MBTI 검사</p>
+				</header>
+
+				<div id="img">
+					<img src="{% static 'BookLovers/images/teens-reading.jpg' %}" width="70%" height="70%"/>
 				</div>
-			</section>
+
+				<form action="{% url 'exam2' %}" method="post">
+					{% csrf_token %}
+
+					<input type="hidden" name="exam1_mbti" value="{{ exam1_mbti }}" />
+					<input type="hidden" name="exam2_mbti" value="{{ exam2_mbti }}" />
+					<input type="hidden" name="exam3_mbti" value="{{ exam3_mbti }}" />
+					<input type="hidden" name="exam3_mbti" value="{{ exam3_mbti }}" />
+					<input type="hidden" name="mbti" value="{{ mbti }}" />
+
+					<div id="question_container">
+						<div class="question">
+							<div class="q_a">
+								<p>Q1. 당신에게 꿀같은 휴가가 생겼을 때</p>
+
+								<input type="radio" name="exam1_Q1" value="E">
+								<a>'주말여행 코스북'을 들고 당장 밖으로 나간다</a><br>
+
+								<input type="radio" name="exam1_Q1" value="I">
+								<a>집에서 내가 좋아하는 책을 읽으며 휴식을 취한다.</a><br>
+							</div>
+							<div class="q_a">
+								<p>Q2. 학창 시절 당신은 어떤 사람이었나요?</p>
+
+								<input type="radio" name="exam1_Q2" value="E">
+								<a>I'm top 인싸.</a><br>
+
+								<input type="radio" name="exam1_Q2" value="I">
+								<a>교내의 일은 나와 관련이 없소이다..</a><br>
+							</div>
+							<div class="q_a">
+								<p>Q3. 오랜만에 정말 인생책을 찾았을 때 나는</p>
+
+								<input type="radio" name="exam1_Q3" value="E">
+								<a>야 이 책 꼭 봐야돼.. 진짜 대박이야.. 꼭 읽어야 돼 진짜... 주변사람들에게 인생책이라며 추천한다.</a><br>
+
+								<input type="radio" name="exam1_Q3" value="I">
+								<a>오... 나만 알고 싶은 책이다... 이건 찐이야.. 혼자 인생책을 찾은 기쁨을 만끽한다.</a><br>
+							</div>
+
+							<button type="submit" id="check">go to next page</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+
 
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+			</ul>
+			<div class="copyright">
+				&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+			</div>
+		</footer>
+
 
 		<!-- Scripts -->
-			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script>
+			$('#check').click(function() {
+				if (document.getElementsByName('exam1_Q1')[0].checked == false && document.getElementsByName('exam1_Q1')[1].checked == false) {
+					alert("1번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam1_Q2')[0].checked == false && document.getElementsByName('exam1_Q2')[1].checked == false) {
+					alert("2번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam1_Q3')[0].checked == false && document.getElementsByName('exam1_Q3')[1].checked == false) {
+					alert("3번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+			})
+		</script>
 
 	</body>
 </html>

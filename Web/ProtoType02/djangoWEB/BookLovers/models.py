@@ -51,8 +51,9 @@ class AdultBook(models.Model) :
     class_no = models.TextField(default="")
     loan_count = models.IntegerField(default=0)
     bookImageURL = models.TextField(default="")
-    keyword = models.TextField(default="")
-    describe = models.TextField(default="")
+    text_reviews_count = models.IntegerField(default=0)
+    average_rating = models.FloatField(default=0)
+    num_pages = models.TextField(default="")
     intro = models.TextField(default="")
 
     def __str__(self):
@@ -69,10 +70,11 @@ class ChildBook(models.Model) :
     addition_symbol = models.TextField(default="")
     vol = models.TextField(default="")
     class_no = models.TextField(default="")
-    loan_count = models.IntegerField(default=0)
+    loan_count = models.TextField(default="")
     bookImageURL = models.TextField(default="")
-    keyword = models.TextField(default="")
-    describe = models.TextField(default="")
+    text_reviews_count = models.TextField(default="")
+    average_rating = models.TextField(default="")
+    num_pages = models.TextField(default="")
     intro = models.TextField(default="")
 
     def __str__(self):
@@ -89,10 +91,33 @@ class TeenagerBook(models.Model) :
     addition_symbol = models.TextField(default="")
     vol = models.TextField(default="")
     class_no = models.TextField(default="")
-    loan_count = models.IntegerField(default=0)
+    loan_count = models.TextField(default="")
     bookImageURL = models.TextField(default="")
-    keyword = models.TextField(default="")
-    describe = models.TextField(default="")
+    text_reviews_count = models.TextField(default="")
+    average_rating = models.TextField(default="")
+    num_pages = models.TextField(default="")
+    intro = models.TextField(default="")
+
+    def __str__(self):
+        return self.no
+
+
+class AllBook(models.Model) :
+    no = models.IntegerField(primary_key=True)
+    bookname = models.TextField(default="")
+    author = models.TextField(default="")
+    publisher = models.TextField(default="")
+    publication_year = models.TextField(default="")
+    isbn13 = models.TextField(default="")
+    addition_symbol = models.TextField(default="")
+    vol = models.TextField(default="")
+    class_no = models.TextField(default="")
+    loan_count = models.TextField(default="")
+    bookImageURL = models.TextField(default="")
+    text_reviews_count = models.TextField(default="")
+    average_rating = models.TextField(default="")
+    num_pages = models.TextField(default="")
+    intro = models.TextField(default="")
 
     def __str__(self):
         return self.no

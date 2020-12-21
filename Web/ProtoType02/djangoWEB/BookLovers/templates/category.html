@@ -37,6 +37,14 @@
 
 		th, td {
 			border: 1px solid black;
+			text-align: center;
+			align: center;
+			vertical-align: middle;
+		}
+
+		.info {
+			color: #444;
+			text-align: center;
 		}
 	</style>
 
@@ -54,8 +62,8 @@
 		<nav id="menu">
 			<ul class="links">
 				<li><a href="../index">Home</a></li>
-				<li><a href="../index/category">Category</a></li>
 				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
 				<li><a href="../index/healing">Healing</a></li>
 			</ul>
 		</nav>
@@ -113,10 +121,16 @@
 				<!-- 결과 출력 -->
 				<div style="overflow: scroll; width: 100%; height: 600px; display: inline-block;">
 					<table>
-						<tr>
-							<th style="text-align: center">책 제목</th>
-							<th style="text-align: center">책 표지</th>
-						</tr>
+						<colgroup>
+							<col width="80%">
+							<col width="20">
+						</colgroup>
+						<thead>
+							<tr>
+								<th style="text-align: center;">책 제목</th>
+								<th style="text-align: center;">책 표지</th>
+							</tr>
+						</thead>
 						<tbody id="tbody">
 						</tbody>
 					</table>
@@ -159,8 +173,8 @@
 							var txt = "";
 
 							$.each(data , function(idx, obj) {
-								txt += "<tr><td align='center' vertical-align='middle'><a href='javascript:void(0);' onclick='callFunction(" + obj.isbn13 + ");'>" + obj.bookname + "</a></td>";
-								txt += "<td style='text-align: center'>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
+								txt += "<tr><td><a href='javascript:void(0);' onclick='callFunction(" + obj.isbn13 + ");'>" + obj.bookname + "</a></td>";
+								txt += "<td>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
 							});
 
 							$("#tbody").append(txt);
@@ -174,6 +188,7 @@
 		<script>
 			function callFunction(isbn13) {
 				$('#bookInfo').empty()
+				$('#bookList').empty()
 
 				// ajax 통신 - json
 				$.ajax({
@@ -215,15 +230,25 @@
 				$.ajax({
 					url : "{% url 'content_info' %}",
 					type : "post",
-					data : {'csrfmiddlewaretoken' : '{{ csrf_token }}', bookName : $('#bookName').text()},
+					data : {'csrfmiddlewaretoken' : '{{ csrf_token }}', bookName : $('#bookName').text(), ageType : $('#ageType').val()},
 					dataType : "json",
 					success : function(data) {
 						var txt = "";
 
+						txt += "<thead><tr><th style='text-align: center;'>책 제목</th>";
+						txt += "<th style='text-align: center;'>저자</th>"
+						txt += "<th style='text-align: center;'>출판사</th>"
+						txt += "<th style='text-align: center;'>책 표지</th></tr></thead>"
+						txt += "<tbody>";
+
 						$.each(data , function(idx, obj) {
-							txt += "<tr><td align='center' vertical-align='middle'><a href='javascript:void(0);' onclick='callFunction(" + obj.isbn13 + ");'>" + obj.bookname + "</a></td>";
-							txt += "<td style='text-align: center'>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
+							txt += "<tr><td>" + obj.bookname + "</td>";
+							txt += "<td>" + obj.author + "</td>";
+							txt += "<td>" + obj.publisher + "</td>";
+							txt += "<td>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
 						});
+
+						txt += "</tbody>";
 
 						$("#bookList").append(txt);
 					}
@@ -245,11 +270,20 @@
 					success : function(data) {
 						var txt = "";
 
+						txt += "<thead><tr><th style='text-align: center;'>책 제목</th>";
+						txt += "<th style='text-align: center;'>저자</th>"
+						txt += "<th style='text-align: center;'>출판사</th>"
+						txt += "<th style='text-align: center;'>책 표지</th></tr></thead>"
+						txt += "<tbody>";
+
 						$.each(data , function(idx, obj) {
-							txt += "<tr><td align='center' vertical-align='middle'>" + obj.bookname + "</td>";
-							txt += "<td align='center' vertical-align='middle'>" + obj.author + "</td>";
-							txt += "<td style='text-align: center'>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
+							txt += "<tr><td>" + obj.bookname + "</td>";
+							txt += "<td>" + obj.author + "</td>";
+							txt += "<td>" + obj.publisher + "</td>";
+							txt += "<td>" + "<img src='" + obj.bookImageURL + "' width='82px' height='113px'/>" + "</td></tr>";
 						});
+
+						txt += "</tbody>";
 
 						$("#bookList").append(txt);
 					}

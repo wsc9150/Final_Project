@@ -8,74 +8,73 @@
 
 <html>
 	<head>
-		<title>Generic - Binary by TEMPLATED</title>
+		<title>MBTI Result</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
 		<style>
-            #container{
+            #container {
                 width: 100%;
                 height: 100%;
                 margin: auto;
                 top:50%;
                 left:50%;
             }
-            .q_a{
+
+            .q_a {
                 height: 90%;
                 width: 100%;
                 text-align : center;
             }
 
-            .button{
-                width: 100%;
+            .btn {
+                margin-left: 20px;
+                margin-right: 20px;
+                // width: 100%;
                 display: flex;
                 background-color: white;
                 justify-content: space-between;
             }
-            .more_book{
-                font-weight: 800;
+
+            .more_book {
+                // float: left;
+                // margin-left: 70px;
             }
-            .redo{
-                width: 50%;
-                margin-top: -87px;
-                margin-right: 70px;
-                float: right;
+
+            .more_mbti {
+                // float: right;
             }
-            .redo_mbti{
-                font-weight: 800;
-            }
-            .redo_mbti:hover {
-			    text-decoration: none;
-			}
-            .more_mbti{
-                font-weight: 800;
-            }
-            footer{
-				display:none;
-			}
 		</style>
 	</head>
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
-				<nav>
-					<a href="#menu">Menu</a>
-				</nav>
-			</header>
+        <header id="header">
+            <a href="../index" class="logo"><strong>Book Lovers</strong></a>
+            <nav>
+                <a href="#menu">Menu</a>
+            </nav>
+        </header>
+
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../index">Home</a></li>
-					<li><a href="../index/category">Category</a></li>
-					<li><a href="../index/mbti">MBTI</a></li>
-					<li><a href="../index/healing">Healing</a></li>
-				</ul>
-			</nav>
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
+
 
 		<!-- Main -->
+<!--        <section id="main">-->
+<!--            <div class="inner">-->
+<!--                <header>-->
+<!--                    <p class="info">MBTI Result & Recommendation</p>-->
+<!--                </header>-->
+<!--            </div>-->
             <div id="wrap">
                 <section>
                     <form action="{% url 'otherBook' %}" method="post">
@@ -117,8 +116,11 @@
                                 <img src="{% static 'BookLovers/images/MBTI_ESFP.jpg' %}" />
                                 {% endif %}
                             </div>
-                            <div class="button">
+                            <div class="btn">
                                 <button type="submit" class="more_book">내가 관심 가질만한 다른 책</button>
+
+                                <button type="button" class="more_book" onClick="location.href='mbti'">처음으로 돌아가기</button>
+
                                 {% if mbti == 'INTJ' %}
                                 <button type="button" class="more_mbti" onClick="location.href='https://www.16personalities.com/ko/%EC%84%B1%EA%B2%A9%EC%9C%A0%ED%98%95-intj'" >내 유형에 대해 더 알고 싶다면</button>
                                 {% elif mbti == 'INTP' %}
@@ -155,69 +157,30 @@
                             </div>
                         </div>
                     </form>
-                    <div class="redo">
-                        <button class="redo_mbti" onClick="location.href='../mbti'">처음으로 돌아가기</button>
-                    </div>
                 </section>
             </div>
+<!--        </section>-->
 
-            <!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
-
-        <script>
-            $(document).ready(function(){
-                $('.more_book').click(function(){
-                    $.ajax({
-                        url: "{% url 'result_ajax' %}",
-                        type : "post",
-                        data : {'csrfmiddlewaretoken' : '{{ csrf_token }}' },
-                        dataType: "json",
-
-                        success:function(data)
-                        {
-                            var txt = "";
-                            $.each(data , function(idx, obj) {
-                                txt += "<tr><td align='center' vertical-align='middle'>" + obj.No + "</td>";
-                                txt += "<td align='center' vertical-align='middle'>" + obj.title + "</td>";
-                                txt += "<td align='center' vertical-align='middle'>" + obj.author + "</td>";
-                                txt += "<td align='center' vertical-align='middle'>" + obj.publisher + "</td>";
-                                txt += "<td style='text-align: center'>" + "<img src='" + obj.image + "' width='82px' height='113px'/>" + "</td></tr>";
-                            });
-
-                            $("#tbody").append(txt);
-                        }
-                    });
-                });
-            });
-        </script>
 
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+            </ul>
+            <div class="copyright">
+                &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+            </div>
+        </footer>
+
 
 		<!-- Scripts -->
-			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+        <script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+        <script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+        <script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+        <script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
 
 	</body>
 </html>

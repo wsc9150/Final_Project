@@ -8,7 +8,7 @@
 
 <html>
 	<head>
-		<title>Generic - Binary by TEMPLATED</title>
+		<title>MBTI Test - 2</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="{% static 'BookLovers/assets/css/main.css' %}" />
@@ -16,11 +16,13 @@
             body::-webkit-scrollbar {
                 display: none;
             }
-			h1{
+
+			h1 {
 				width: 100%;
 				text-align: center;
 			}
-            #img{
+
+            #img {
                 width: 55%;
                 height: 100%;
                 float: left;
@@ -32,46 +34,50 @@
                 display: flex;
                 justify-content: center;
             }
-            img{
-            	margin-top: 75px;
-            	width: 90%;
-            	margin-left: -20px;
-            	height: 82%;}
 
-            #question_container{
+            img {
+            	// margin-top: 75px;
+            	// width: 90%;
+            	// margin-left: -20px;
+            	// height: 82%;
+            }
+
+            #question_container {
                 width: 50%;
                 height: 100%;
                 float: right;
             }
-            .question{
-            	margin-top: -20px;
 
+            .question {
+            	margin-top: -20px;
                 position: absolute;
             }
-            .q_a{
-                position: relative;
-            }
+
             p, a {
                 color: black;
             }
-            p{
+
+            p {
                 font-size   : 25px;
                 font-style  : italic;
                 font-weight : 900;
                 font-color  : black;
                 margin-bottom : 20px;
             }
-            a{
+
+            a {
                 font-weight : 500;
             }
-            a:hover {
-			text-decoration: none;
-			}
-            .q_a{
-                margin-top: 60px;
-            }
-            button{
 
+            a:hover {
+				text-decoration: none;
+			}
+
+            .q_a {
+                margin-top: 50px;
+            }
+
+            button {
                 padding-left: 5px;
                 padding-right: 5px;
                 font-weight: 800;
@@ -81,215 +87,132 @@
                 text-align: center;
                 font-weight: 800;
             }
-			footer{
+
+			footer {
 				display:none;
 			}
-            /* 화면 너비 0 ~ 1200px */
-            @media (max-width: 1220px){
-                body{width: 100%; height: 100%;}
-                #img{width: 50%; margin-left: -50px; margin-top: 20px;}
-                #question_container{width: 50%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 768px */
-            @media (max-width: 768px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
-            }
-            /* 화면 너비 0 ~ 480px */
-            @media (max-width: 480px){
-                body{width: 100%; height: 100%;}
-                img{margin-top: 45px; width: 85%; height: 75%;}
-                section {width: 100%; height: 100%;}
+
+			.info {
+				color: #444;
+				text-align: center;
             }
 		</style>
 	</head>
 	<body>
 
 		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="logo"><strong>Binary</strong> by TEMPLATED</a>
-				<nav>
-					<a href="#menu">Menu</a>
-				</nav>
-			</header>
+		<header id="header">
+			<a href="../index" class="logo"><strong>Book Lovers</strong></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
+
 
 		<!-- Nav -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../index">Home</a></li>
-					<li><a href="../index/category">Category</a></li>
-					<li><a href="../index/mbti">MBTI</a></li>
-					<li><a href="../index/healing">Healing</a></li>
-				</ul>
-			</nav>
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="../index">Home</a></li>
+				<li><a href="../index/mbti">MBTI</a></li>
+				<li><a href="../index/category">Category</a></li>
+				<li><a href="../index/healing">Healing</a></li>
+			</ul>
+		</nav>
+
 
 		<!-- Main -->
-			<section id="main">
-				<div class="inner">
-					<header>
-						<h1>재미로 보는 MBTI 검사</h1>
-					</header>
-					<form action="{% url 'exam3' %}" method="post">
-						{% csrf_token %}
-						<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
-						<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
-						<div id="img">
-							<img src="{% static 'BookLovers/images/image1-1024x683.jpg' %}"/>
-						</div>
-						<div id="question_container">
-							<div class="question">
-                                <div class="q_a">
-                                    <p>Q1. 이번에 부산가는데 어디로 가시겠어요?</p>
-                                    <input type="radio" name="exam2_Q1" value="S">
-                                    <a>제가 아는 곳으로 모시겠습니다~</a><br>
-                                    <input type="radio" name="exam2_Q1" value="N">
-                                    <a>음~ 해운대를 가도 좋고 광안리도 좋고~어디가 좋을까아?</a><br>
-                                </div>
-                                <div class="q_a">
-                                    <p>Q2. 당신은 현재 어떤 삶을 살고 계신가요?</p>
-                                    <input type="radio" name="exam2_Q2" value="S">
-                                    <a>이상적이며 미래를 위해 투자하고 새로운 시도를 해본다.</a><br>
-                                    <input type="radio" name="exam2_Q2" value="N">
-                                    <a>현재 보이는 일상과 문제에 집중한다.</a><br>
-                                </div>
-                                <div class="q_a">
-                                    <p>Q3.  코로나 백신이 개발되어 오랜만에 해외여행을 가게 된 당신~ 여행 관련 책을 고를 때 나는</p>
-                                    <input type="radio" name="exam2_Q3" value="S">
-                                    <a>“예전에 여행다녀왔을 때 봤던 책이  좋았지!!!” 과거 경험을 토대로 가장 괜찮았던 여행 책을 고른다.</a><br>
-                                    <input type="radio" name="exam2_Q3" value="N">
-                                    <a>“오~ 이 여행책 처음 봤지만 참신한데?” 참신한 신상 책을 선택한다.</a><br>
-                                </div>
-								<button type="submit">go to next page</button>
+		<section id="main">
+			<div class="inner">
+				<header>
+					<p class="info">MBTI Test - 재미로 보는 MBTI 검사 p.2</p>
+				</header>
+				<form action="{% url 'exam3' %}" method="post">
+					{% csrf_token %}
+
+					<input type="hidden" name="exam1_mbti" value="{{exam1_mbti}}" />
+					<input type="hidden" name="exam2_mbti" value="{{exam2_mbti}}" />
+					<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+					<input type="hidden" name="exam3_mbti" value="{{exam3_mbti}}" />
+
+					<div id="img">
+						<img src="{% static 'BookLovers/images/image1-1024x683.jpg' %}" width="70%" height="70%"/>
+					</div>
+
+					<div id="question_container">
+						<div class="question">
+							<div class="q_a">
+								<p>Q4. 친구들과 갑작스레 부산여행을 가게 된 당신, 이 때 당신의 반응은?</p>
+
+								<input type="radio" name="exam2_Q1" value="S">
+								<a>야!! 내가 좋은 곳들 아는데 거기로 갈래?</a><br>
+
+								<input type="radio" name="exam2_Q1" value="N">
+								<a>음.. 부산에 좋은 곳들 많은데 어디가 좋을까아?</a><br>
 							</div>
+							<div class="q_a">
+								<p>Q5. 당신은 현재 어떤 삶을 살고 계신가요?</p>
+
+								<input type="radio" name="exam2_Q2" value="S">
+								<a>이상적인 미래를 위해 투자하고 새로운 시도를 해본다.</a><br>
+
+								<input type="radio" name="exam2_Q2" value="N">
+								<a>현재 보이는 일상과 문제에 집중한다.</a><br>
+							</div>
+							<div class="q_a">
+								<p>Q6. 코로나 백신이 개발되어 오랜만에 해외여행을 가게 된 당신! 여행 관련 책을 고를 때</p>
+
+								<input type="radio" name="exam2_Q3" value="S">
+								<a>"예전에 여행다녀왔을 때 봤던 책이 좋았지!!!" 과거 경험을 토대로 가장 괜찮았던 여행 책을 고른다.</a><br>
+
+								<input type="radio" name="exam2_Q3" value="N">
+								<a>"오~ 이 여행책 처음 봤지만 참신한데?" 참신한 신상 책을 선택한다.</a><br>
+							</div>
+
+							<button type="submit" id="check">go to next page</button>
 						</div>
-					</form>
-				</div>
-			</section>
+					</div>
+				</form>
+			</div>
+		</section>
+
 
 		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-				</ul>
-				<div class="copyright">
-					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
-				</div>
-			</footer>
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+			</ul>
+			<div class="copyright">
+				&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Unsplash</a>.
+			</div>
+		</footer>
+
 
 		<!-- Scripts -->
-			<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
-			<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/util.js' %}"></script>
+		<script src="{% static 'BookLovers/assets/js/main.js' %}"></script>
+		<script>
+			$('#check').click(function() {
+				if (document.getElementsByName('exam2_Q1')[0].checked == false && document.getElementsByName('exam2_Q1')[1].checked == false) {
+					alert("4번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam2_Q2')[0].checked == false && document.getElementsByName('exam2_Q2')[1].checked == false) {
+					alert("5번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+
+				if (document.getElementsByName('exam2_Q3')[0].checked == false && document.getElementsByName('exam2_Q3')[1].checked == false) {
+					alert("6번 문항을 선택하지 않았습니다.");
+					return false;
+				}
+			})
+		</script>
 
 	</body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--{% load static %}-->
-
-<!--<html lang="en">-->
-<!--    <head>-->
-<!--        <meta charset="UTF-8">-->
-<!--        <title>Title</title>-->
-<!--        <style>-->
-<!--            #header {-->
-<!--                position: relative;-->
-<!--                z-index: 10000;-->
-<!--                left: 0;-->
-<!--                top: 0;-->
-<!--                width: 100%;-->
-<!--                background: rgba(255, 255, 255, 0.95);-->
-<!--                height: 3em;-->
-<!--                line-height: 3em;-->
-<!--                box-shadow: 0 0 0.15em 0 rgba(0, 0, 0, 0.1);-->
-<!--                margin-top : 0px;-->
-<!--                text-align : center;-->
-<!--            }-->
-
-<!--            .button{-->
-<!--                display: flex;-->
-<!--                justify-content: space-between;-->
-<!--                margin-top : 20px;-->
-<!--                padding-right: 20px;-->
-<!--            }-->
-
-<!--            p{-->
-<!--                font-size   : 25px;-->
-<!--                font-style  : italic;-->
-<!--                font-weight : 900;-->
-<!--                font-color  : black;-->
-<!--            }-->
-
-<!--            section{-->
-<!--                background-image: url({% static 'images/book_img07.jpg' %});-->
-<!--                background-size: 100% 100%, cover;-->
-<!--                background-attachment: fixed, fixed;-->
-<!--                background-position: top left, center center;-->
-<!--                margin: auto;-->
-<!--                opacity: 0.5;-->
-<!--                position: absolute;-->
-<!--                height : 100%;-->
-<!--                width: 100%;-->
-<!--            }-->
-<!--            a:active{-->
-<!--                background-color: aqua;-->
-<!--            }-->
-<!--            body{-->
-<!--                overflow-x:hidden;-->
-<!--                overflow-y:hidden;-->
-<!--            }-->
-<!--        </style>-->
-
-<!--    </head>-->
-<!--    <body>-->
-<!--        <header id="header">-->
-<!--            <h1>psychological test S vs N</h1>-->
-<!--        </header>-->
-
-<!--        <section>-->
-<!--            <form action="{% url 'exam3' %}" method="post">-->
-<!--                {% csrf_token %}-->
-<!--                <form>-->
-<!--                    <div class="q_a">-->
-<!--                        <p>Q1. 이번에 부산가는데 어디로 가시겠어요?</p>-->
-<!--                        <input type="radio" name="exam2_Q1" value="S">-->
-<!--                        <a>제가 아는 곳으로 모시겠습니다~</a><br>-->
-<!--                        <input type="radio" name="exam2_Q1" value="N">-->
-<!--                        <a>음~ 해운대를 가도 좋고 광안리도 좋고~어디가 좋을까아?</a><br>-->
-<!--                    </div>-->
-<!--                    <div class="q_a">-->
-<!--                        <p>Q2. 당신은 현재 어떤 삶을 살고 계신가요?</p>-->
-<!--                        <input type="radio" name="exam2_Q2" value="S">-->
-<!--                        <a>이상적이며 미래를 위해 투자하고 새로운 시도를 해본다.</a><br>-->
-<!--                        <input type="radio" name="exam2_Q2" value="N">-->
-<!--                        <a>현재 보이는 일상과 문제에 집중한다.</a><br>-->
-<!--                    </div>-->
-<!--                    <div class="q_a">-->
-<!--                        <p>Q3.  코로나 백신이 개발되어 오랜만에 해외여행을 가게 된 당신~ 여행 관련 책을 고를 때 나는</p>-->
-<!--                        <input type="radio" name="exam2_Q3" value="S">-->
-<!--                        <a>“예전에 여행다녀왔을 때 봤던 책이  좋았지!!!” 과거 경험을 토대로 가장 괜찮았던 여행 책을 고른다.</a><br>-->
-<!--                        <input type="radio" name="exam2_Q3" value="N">-->
-<!--                        <a>“오~ 이 여행책 처음 봤지만 참신한데?” 참신한 신상 책을 선택한다.</a><br>-->
-<!--                    </div>-->
-<!--                    <div class="button">-->
-<!--                        <button type="submit">go to next page</button>-->
-<!--                    </div>-->
-
-<!--                </form>-->
-<!--            </form>-->
-
-<!--&lt;!&ndash;            <div class="button">&ndash;&gt;-->
-<!--&lt;!&ndash;                <button type="button" onClick="location.href='/finalProject/exam1'" >go to Previous page</button>&ndash;&gt;-->
-<!--&lt;!&ndash;                <button type="button" onClick="location.href='/finalProject/exam3'" >go to next page</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--        </section>-->
-<!--    </body>-->
-<!--</html>-->
