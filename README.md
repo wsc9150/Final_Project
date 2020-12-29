@@ -56,13 +56,13 @@
 
 2. **콘텐츠 및 인기도 기반 책 제공 서비스**
 
-   ![](C:\Users\kim23\Final_Project\Image\책소개분석.png)
+   ![책소개분석](C:\Users\kim23\Final_Project\Image\책소개분석.png)
 
-   ![](C:\Users\kim23\Final_Project\Image\인기도분석.png)
+   ![인기도분석](C:\Users\kim23\Final_Project\Image\인기도분석.png)
 
 3.  __Healing Books 추천 서비스__
 
-   ![](C:\Users\kim23\Final_Project\Image\힐링북분석.png)
+   ![힐링북분석](C:\Users\kim23\Final_Project\Image\힐링북분석.png)
 
 ---
 
