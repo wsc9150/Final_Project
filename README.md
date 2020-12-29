@@ -52,17 +52,17 @@
 
 1. __Develop your MBTI with Books__
 
-   ![mbti분석](C:\Users\kim23\Final_Project\Image\mbti분석.png)
+   ![mbti분석](.\Image\mbti분석.png)
 
 2. **콘텐츠 및 인기도 기반 책 제공 서비스**
 
-   ![책소개분석](C:\Users\kim23\Final_Project\Image\책소개분석.png)
+   ![책소개분석](.\Image\책소개분석.png)
 
-   ![인기도분석](C:\Users\kim23\Final_Project\Image\인기도분석.png)
+   ![인기도분석](.\Image\인기도분석.png)
 
 3.  __Healing Books 추천 서비스__
 
-   ![힐링북분석](C:\Users\kim23\Final_Project\Image\힐링북분석.png)
+   ![힐링북분석](.\Image\힐링북분석.png)
 
 ---
 
